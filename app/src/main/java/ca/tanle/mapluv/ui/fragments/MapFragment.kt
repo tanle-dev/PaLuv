@@ -75,6 +75,20 @@ class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback {
             it.isCompassEnabled = true
         }
         getDeviceLocation()
+
+        // Change map type
+        binding.mapTypeNormalBtn.setOnClickListener{
+            binding.mapTypeNormalBtn.setImageResource(R.drawable.normal_map_active);
+            binding.mapTypeSatelliteBtn.setImageResource(R.drawable.satellite_map_inactive);
+            googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL;
+        }
+
+        binding.mapTypeSatelliteBtn.setOnClickListener{
+            binding.mapTypeSatelliteBtn.setImageResource(R.drawable.satellite_map_active);
+            binding.mapTypeNormalBtn.setImageResource(R.drawable.normal_map_inactive);
+            googleMap.mapType = GoogleMap.MAP_TYPE_SATELLITE;
+        }
+
     }
 
     override fun onMapReady(p0: GoogleMap) {
