@@ -11,7 +11,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.VectorDrawable
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.FragmentMapBinding
 import ca.tanle.mapluv.ui.activities.EditActivity
@@ -59,12 +58,9 @@ class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback, OnMap
         locationUtils = LocationUtils(acontext)
 
 
-        val fragment = childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
+        val fragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         fragment.getMapAsync(this)
 
-        binding.addBtn.setOnClickListener{
-            Toast.makeText(activity, "Add Click Btn", Toast.LENGTH_SHORT).show()
-        }
 
         return binding.root
     }
@@ -93,6 +89,11 @@ class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback, OnMap
             googleMap.mapType = GoogleMap.MAP_TYPE_SATELLITE;
         }
 
+        // Handle add new fav place
+        binding.addBtn.setOnClickListener{
+            val intent = Intent(acontext, EditActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onMapReady(p0: GoogleMap) {
