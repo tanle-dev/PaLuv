@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MapLuv"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activities.EditActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

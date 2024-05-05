@@ -10,26 +10,29 @@ import androidx.activity.result.contract.ActivityResultContracts
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.graphics.drawable.VectorDrawable
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.FragmentMapBinding
+import ca.tanle.mapluv.ui.activities.EditActivity
 import ca.tanle.mapluv.utils.LocationUtils
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MapFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback {
+class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarkerClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -68,6 +71,7 @@ class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback {
 
     @SuppressLint("MissingPermission")
     fun enableMapFeatures(){
+        googleMap.setOnMapClickListener(this);
         googleMap.isMyLocationEnabled = true
         googleMap.uiSettings.let {
             it.isZoomControlsEnabled= true
@@ -133,5 +137,20 @@ class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback {
             // Display toast about permission not granted.
             Toast.makeText(activity, "Permission denied", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onMapClick(p0: LatLng) {
+        val icon = BitmapDescriptorFactory.fromResource(R.drawable.marker)
+        val markerOptions = MarkerOptions().position(p0).icon(icon).title("Tan Le")
+
+        googleMap.clear()
+        googleMap.addMarker(markerOptions)
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(p0))
+        googleMap.setOnMarkerClickListener(this)
+    }
+
+    override fun onMarkerClick(p0: Marker): Boolean {
+        p0.remove();
+        return  true
     }
 }
