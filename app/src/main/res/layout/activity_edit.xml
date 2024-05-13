@@ -88,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addPlaceBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -112,7 +112,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/lat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -135,7 +135,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/lng"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -144,7 +144,7 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/lat" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

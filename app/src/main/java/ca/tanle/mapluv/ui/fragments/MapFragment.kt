@@ -13,6 +13,7 @@ import android.content.Context
 import android.content.Intent
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.FragmentMapBinding
+import ca.tanle.mapluv.ui.activities.CoordinatesViewModel
 import ca.tanle.mapluv.ui.activities.EditActivity
 import ca.tanle.mapluv.utils.LocationUtils
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -26,27 +27,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarkerClickListener {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
 
     private lateinit var googleMap: GoogleMap
     private lateinit var binding: FragmentMapBinding
     private lateinit var locationUtils: LocationUtils
+    var coordinatesViewModel: CoordinatesViewModel = CoordinatesViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -91,7 +82,11 @@ class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback, OnMap
 
         // Handle add new fav place
         binding.addBtn.setOnClickListener{
-            val intent = Intent(acontext, EditActivity::class.java)
+            val coordinate = coordinatesViewModel.getCoordinate()
+            val bundle = Bundle()
+            bundle.putDouble("lat", coordinate!!.latitude)
+            bundle.putDouble("lng", coordinate!!.longitude)
+            val intent = Intent(acontext, EditActivity::class.java).putExtras(bundle)
             startActivity(intent)
         }
     }
@@ -148,6 +143,8 @@ class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback, OnMap
         googleMap.addMarker(markerOptions)
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(p0))
         googleMap.setOnMarkerClickListener(this)
+
+        coordinatesViewModel.setCoordinate(p0)
     }
 
     override fun onMarkerClick(p0: Marker): Boolean {

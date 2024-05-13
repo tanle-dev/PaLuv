@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.AddPlaceActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/baseline_arrow_back_24"
+        app:title="Add New Place"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="15dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="0dp"
+                    android:layout_height="61dp"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="170dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/create_sign_icon"
+                    tools:src="@drawable/create_sign_icon" />
+
+                <TextView
+                    android:id="@+id/addressText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="40dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="34dp"
+                    android:layout_height="33dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginTop="17dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/addressText"
+                    app:srcCompat="@drawable/flag_icon" />
+
+                <EditText
+                    android:id="@+id/placeNameEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:hint="Add place name."
+                    android:inputType="text|textUri"
+                    android:paddingStart="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintTop_toBottomOf="@+id/addressText" />
+
+                <CheckBox
+                    android:id="@+id/visitedCheckBox"
+                    android:layout_width="35dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+                <ImageView
+                    android:id="@+id/star1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/star2"
+                    app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
+                    app:srcCompat="@drawable/star_filled_icon" />
+
+                <ImageView
+                    android:id="@+id/star2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/star3"
+                    app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
+                    app:srcCompat="@drawable/star_filled_icon" />
+
+                <ImageView
+                    android:id="@+id/star3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/star4"
+                    app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
+                    app:srcCompat="@drawable/star_filled_icon" />
+
+                <ImageView
+                    android:id="@+id/star4"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/star5"
+                    app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
+                    app:srcCompat="@drawable/star_filled_icon" />
+
+                <ImageView
+                    android:id="@+id/star5"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="40dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
+                    app:srcCompat="@drawable/star_plain_icon" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Visited"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/visitedCheckBox"
+                    app:layout_constraintTop_toBottomOf="@+id/placeNameEditText" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="15dp"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/commentEditText"
+                    app:srcCompat="@drawable/phone_icon"
+                    tools:src="@tools:sample/avatars" />
+
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView9"
+                    app:srcCompat="@drawable/web_icon"
+                    tools:src="@tools:sample/avatars" />
+
+                <EditText
+                    android:id="@+id/commentEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:ems="10"
+                    android:hint="Please give comment here !"
+                    android:includeFontPadding="false"
+                    android:inputType="text|textShortMessage|textMultiLine"
+                    android:maxLines="3"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/phoneEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:hint="Add phone number."
+                    android:inputType="phone"
+                    android:paddingStart="40dp"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView9"
+                    app:layout_constraintTop_toBottomOf="@+id/commentEditText" />
+
+                <EditText
+                    android:id="@+id/linkEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:hint="Add website link."
+                    android:inputType="text|textUri"
+                    android:paddingStart="40dp"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView10"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneEditText" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:padding="20dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Set a Reminder for this place"
+                    android:textSize="18sp"
+                    android:textStyle="italic"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Switch
+                    android:id="@+id/reminderSwitch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView7"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/removeBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/white"
+                    android:text="Remove"
+                    android:textColor="@color/primaryColor"
+                    app:cornerRadius="5dp"
+                    app:layout_constraintEnd_toStartOf="@+id/saveBtn"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+                    app:strokeColor="@color/primaryColor"
+                    app:strokeWidth="1dp" />
+
+                <Button
+                    android:id="@+id/saveBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:text="Save"
+                    app:cornerRadius="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/removeBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.54"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/datePickerBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_weight="2"
+                            android:backgroundTint="#FFFFFF"
+                            android:text="05/11/2024"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="20sp"
+                            app:cornerRadius="5dp"
+                            app:strokeColor="@color/primaryColor"
+                            app:strokeWidth="1dp" />
+
+                        <Space
+                            android:layout_width="8dp"
+                            android:layout_height="wrap_content" />
+
+                        <Button
+                            android:id="@+id/timePickerBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/white"
+                            android:text="09:49"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="20sp"
+                            app:cornerRadius="5dp"
+                            app:strokeColor="@color/primaryColor"
+                            app:strokeWidth="1dp" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <EditText
+                        android:id="@+id/reminderTitleEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/edit_text_bg"
+                        android:ems="10"
+                        android:hint="Your reminder note !"
+                        android:includeFontPadding="false"
+                        android:inputType="text|textShortMessage|textMultiLine"
+                        android:maxLines="3"
+                        android:padding="10dp"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
