@@ -7,12 +7,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.ActivityEditBinding
 import ca.tanle.mapluv.databinding.ActivityMainBinding
 
 class EditActivity : AppCompatActivity() {
     lateinit var binding: ActivityEditBinding
+    private lateinit var viewModel: ViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditBinding.inflate(layoutInflater)
@@ -33,6 +36,14 @@ class EditActivity : AppCompatActivity() {
             val intent = Intent(this, AddPlaceActivity::class.java)
             startActivity(intent)
         }
+
+        viewModel = ViewModelProvider(this).get(PlacesViewModel::class.java)
+        val placeList = (viewModel as PlacesViewModel).allPlaces
+
+        placeList.observe(this){places ->
+            binding.textView2.text = places.size.toString()
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

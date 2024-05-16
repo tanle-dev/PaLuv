@@ -1,6 +1,7 @@
 package ca.tanle.mapluv.ui.activities
 
 import android.Manifest
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -11,6 +12,7 @@ import ca.tanle.mapluv.databinding.ActivityMainBinding
 import ca.tanle.mapluv.ui.fragments.MapFragment
 import ca.tanle.mapluv.ui.fragments.PlacesFragment
 import ca.tanle.mapluv.ui.fragments.ProfileFragment
+import ca.tanle.mapluv.utils.Graph
 import ca.tanle.mapluv.utils.LocationUtils
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Graph.provide(this)
 
         onNavItemClicked()
     }
