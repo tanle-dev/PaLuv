@@ -28,11 +28,11 @@ Creating an Android app to store favourite locations.
 ### Add Location
 
 ![Screenshot](./docs/imgs/createScreen.png)
-![Screenshot](./docs/imgs/dettailCreateScreen.png)
+![Screenshot](./docs/imgs/detailCreateScreen.png)
 
 ### Detail Location Model
 
-![Screenshot](./docs/imgs/detailModel.png)
+![Screenshot](./docs/imgs/detailModal.png)
 
 ### Location List Screen
 
