@@ -11,6 +11,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.FragmentMapBinding
 import ca.tanle.mapluv.ui.activities.CoordinatesViewModel
@@ -26,17 +27,20 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarkerClickListener {
 
 
     private lateinit var googleMap: GoogleMap
     private lateinit var binding: FragmentMapBinding
     private lateinit var locationUtils: LocationUtils
-    var coordinatesViewModel: CoordinatesViewModel = CoordinatesViewModel()
+    private lateinit var coordinatesViewModel: CoordinatesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        coordinatesViewModel = ViewModelProvider(requireActivity()).get(CoordinatesViewModel::class.java)
         super.onCreate(savedInstanceState)
     }
 
@@ -82,11 +86,7 @@ class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback, OnMap
 
         // Handle add new fav place
         binding.addBtn.setOnClickListener{
-            val coordinate = coordinatesViewModel.getCoordinate()
-            val bundle = Bundle()
-            bundle.putDouble("lat", coordinate!!.latitude)
-            bundle.putDouble("lng", coordinate!!.longitude)
-            val intent = Intent(acontext, EditActivity::class.java).putExtras(bundle)
+            val intent = Intent(acontext, EditActivity::class.java)
             startActivity(intent)
         }
     }
@@ -139,12 +139,13 @@ class MapFragment(val acontext: Context) : Fragment(), OnMapReadyCallback, OnMap
         val icon = BitmapDescriptorFactory.fromResource(R.drawable.marker)
         val markerOptions = MarkerOptions().position(p0).icon(icon).title("Tan Le")
 
+        coordinatesViewModel.setCoordinate(p0)
+
         googleMap.clear()
         googleMap.addMarker(markerOptions)
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(p0))
         googleMap.setOnMarkerClickListener(this)
 
-        coordinatesViewModel.setCoordinate(p0)
     }
 
     override fun onMarkerClick(p0: Marker): Boolean {

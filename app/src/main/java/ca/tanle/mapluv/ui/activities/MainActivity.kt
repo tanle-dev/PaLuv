@@ -14,7 +14,9 @@ import ca.tanle.mapluv.ui.fragments.PlacesFragment
 import ca.tanle.mapluv.ui.fragments.ProfileFragment
 import ca.tanle.mapluv.utils.Graph
 import ca.tanle.mapluv.utils.LocationUtils
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 

@@ -1,17 +1,18 @@
 package ca.tanle.mapluv.ui.activities
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class CoordinatesViewModel: ViewModel() {
-    var coordinate = MutableLiveData<LatLng>(LatLng(0.0,0.0))
-
-    fun getCoordinate(): LatLng?{
-        return coordinate.value
-    }
+@HiltViewModel
+class CoordinatesViewModel @Inject constructor(): ViewModel() {
+    private val _coordinate = MutableLiveData<LatLng>()
+    var coordinate: LiveData<LatLng> = _coordinate
 
     fun setCoordinate(latLng: LatLng){
-        coordinate.value = latLng
+        _coordinate.value = latLng
     }
 }
