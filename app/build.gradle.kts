@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -42,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-firestore:25.0.0")
     val room = "2.6.0"
 
     implementation("androidx.room:room-runtime:$room")

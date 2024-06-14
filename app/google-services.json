@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "628978872258",
+    "project_id": "paluv-c8bea",
+    "storage_bucket": "paluv-c8bea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628978872258:android:b111aeb271c7150271305b",
+        "android_client_info": {
+          "package_name": "ca.tanle.mapluv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC4H6EEtrVaff-EqvlfwwVlFAnnjhSql4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
