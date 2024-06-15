@@ -5,13 +5,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.ActivityEditBinding
 import ca.tanle.mapluv.databinding.ActivityMainBinding
+import ca.tanle.mapluv.ui.fragments.AddressFragment
+import ca.tanle.mapluv.ui.fragments.CoordinatesFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,29 +35,38 @@ class EditActivity : AppCompatActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
         actionBar?.setDisplayShowHomeEnabled(true)
 
-//        val coordinate = intent.extras
         coordinatesViewModel = ViewModelProvider(this)[CoordinatesViewModel::class.java]
         val coordinate = coordinatesViewModel.coordinate
-
-        binding.lat.text = coordinate.value?.latitude.toString()
-        binding.lng.text = coordinate.value?.longitude.toString()
-
-        binding.addPlaceBtn.setOnClickListener{
-            val intent = Intent(this, AddPlaceActivity::class.java)
-            startActivity(intent)
-        }
 
         viewModel = ViewModelProvider(this).get(PlacesViewModel::class.java)
         val placeList = viewModel.allPlaces
 
-        placeList.observe(this){places ->
-            binding.textView2.text = places.size.toString()
-        }
-
+        changeScreen(CoordinatesFragment())
+        onOptionClicked()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    private fun changeScreen(fragment: Fragment){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentContainerView2, fragment)
+        fragmentTransaction.commit()
+    }
+
+    private fun onOptionClicked(){
+        binding.ivCoordinate.setOnClickListener{
+            changeScreen(CoordinatesFragment())
+            binding.ivCoordinate.setImageResource(R.drawable.add_marker_active)
+            binding.ivAddress.setImageResource(R.drawable.add_current_inactive)
+        }
+        binding.ivAddress.setOnClickListener{
+            changeScreen(AddressFragment())
+            binding.ivCoordinate.setImageResource(R.drawable.add_marker_inactive)
+            binding.ivAddress.setImageResource(R.drawable.add_current_active)
+        }
     }
 }
