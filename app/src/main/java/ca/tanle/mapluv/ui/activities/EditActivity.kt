@@ -16,6 +16,7 @@ import ca.tanle.mapluv.databinding.ActivityEditBinding
 import ca.tanle.mapluv.databinding.ActivityMainBinding
 import ca.tanle.mapluv.ui.fragments.AddressFragment
 import ca.tanle.mapluv.ui.fragments.CoordinatesFragment
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,10 +37,11 @@ class EditActivity : AppCompatActivity() {
         actionBar?.setDisplayShowHomeEnabled(true)
 
         coordinatesViewModel = ViewModelProvider(this)[CoordinatesViewModel::class.java]
-        val coordinate = coordinatesViewModel.coordinate
 
-        viewModel = ViewModelProvider(this).get(PlacesViewModel::class.java)
-        val placeList = viewModel.allPlaces
+//        viewModel = ViewModelProvider(this).get(PlacesViewModel::class.java)
+//        val placeList = viewModel.allPlaces
+        val bundle = intent.extras!!
+        coordinatesViewModel.setCoordinate(LatLng(bundle.getDouble("lat"), bundle.getDouble("lng")))
 
         changeScreen(CoordinatesFragment())
         onOptionClicked()

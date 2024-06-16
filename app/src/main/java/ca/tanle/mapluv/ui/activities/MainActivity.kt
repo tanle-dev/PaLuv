@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onNavItemClicked(){
-        changeScreen(MapFragment(this))
+        changeScreen(MapFragment())
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.map -> {
-                    changeScreen(MapFragment(this))
+                    changeScreen(MapFragment())
                     true
                 }
 
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    changeScreen(MapFragment(this))
+                    changeScreen(MapFragment())
                     true
                 }
             }
