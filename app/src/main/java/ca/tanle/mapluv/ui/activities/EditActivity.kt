@@ -23,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class EditActivity : AppCompatActivity() {
     lateinit var binding: ActivityEditBinding
     private lateinit var coordinatesViewModel: CoordinatesViewModel
-    private lateinit var viewModel: PlacesViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditBinding.inflate(layoutInflater)
@@ -38,8 +37,6 @@ class EditActivity : AppCompatActivity() {
 
         coordinatesViewModel = ViewModelProvider(this)[CoordinatesViewModel::class.java]
 
-//        viewModel = ViewModelProvider(this).get(PlacesViewModel::class.java)
-//        val placeList = viewModel.allPlaces
         val bundle = intent.extras!!
         coordinatesViewModel.setCoordinate(LatLng(bundle.getDouble("lat"), bundle.getDouble("lng")))
 

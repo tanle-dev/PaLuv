@@ -57,6 +57,7 @@ class CoordinatesFragment : Fragment() {
                 putExtras(bundle)
             }
             startActivity(intent)
+            requireActivity().finish()
         }
     }
 
