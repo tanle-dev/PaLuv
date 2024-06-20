@@ -1,0 +1,28 @@
+package ca.tanle.mapluv.data.remote
+
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Response(
+    val results: List<Address>,
+    val status: String
+): Parcelable
+
+@Parcelize
+data class Address(
+    val formatted_address: String,
+    val geometry: Geometry
+): Parcelable
+
+@Parcelize
+data class Geometry(
+    val location: LocationR,
+    val location_type: String
+): Parcelable
+
+@Parcelize
+data class LocationR(
+    val lat: Double,
+    val lng: Double
+): Parcelable

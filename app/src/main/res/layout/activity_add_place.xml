@@ -6,32 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.AddPlaceActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/baseline_arrow_back_24"
-        app:title="Add New Place"
-        app:titleTextColor="@color/white" />
-
     <ScrollView
         android:layout_width="409dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +39,7 @@
                     tools:src="@drawable/create_sign_icon" />
 
                 <TextView
-                    android:id="@+id/addressText"
+                    android:id="@+id/addressTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
@@ -62,6 +47,8 @@
                     android:layout_marginEnd="40dp"
                     android:text="TextView"
                     android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -73,7 +60,7 @@
                     android:layout_marginStart="45dp"
                     android:layout_marginTop="17dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/addressText"
+                    app:layout_constraintTop_toBottomOf="@+id/addressTextView"
                     app:srcCompat="@drawable/flag_icon" />
 
                 <EditText
@@ -91,7 +78,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView2"
-                    app:layout_constraintTop_toBottomOf="@+id/addressText" />
+                    app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
 
                 <CheckBox
                     android:id="@+id/visitedCheckBox"
@@ -109,6 +96,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:clickable="true"
                     app:layout_constraintEnd_toStartOf="@+id/star2"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
                     app:srcCompat="@drawable/star_filled_icon" />
@@ -119,6 +107,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
+                    android:clickable="true"
                     app:layout_constraintEnd_toStartOf="@+id/star3"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
                     app:srcCompat="@drawable/star_filled_icon" />
@@ -129,6 +118,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
+                    android:clickable="true"
                     app:layout_constraintEnd_toStartOf="@+id/star4"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
                     app:srcCompat="@drawable/star_filled_icon" />
@@ -139,6 +129,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
+                    android:clickable="true"
                     app:layout_constraintEnd_toStartOf="@+id/star5"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
                     app:srcCompat="@drawable/star_filled_icon" />
@@ -149,6 +140,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="40dp"
+                    android:clickable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
                     app:srcCompat="@drawable/star_plain_icon" />
@@ -262,7 +254,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="#FFFFFF"
                 android:padding="20dp"
                 android:paddingBottom="20dp">
