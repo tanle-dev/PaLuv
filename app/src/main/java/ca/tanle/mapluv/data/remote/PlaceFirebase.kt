@@ -12,7 +12,7 @@ class PlaceFirebase {
     }
 
     suspend fun getAPlace(id: String): Place {
-        return Place("", "", false, 0.0, 0.0, "", "", 0, "", "", "");
+        return Place("", "", false, 0.0, 0.0, "", "", 0, "", "", "", "", "");
     }
 
     suspend fun updateAPlace(place: Place) {
