@@ -53,6 +53,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchAddRC"
         android:layout_width="414dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"

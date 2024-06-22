@@ -12,9 +12,8 @@ import retrofit2.Retrofit
 
 class SearchAddressViewModel: ViewModel() {
     private val _searchText = MutableLiveData<String>()
-    val searchText: LiveData<String> = _searchText
 
-    private val _addresses = MutableLiveData<Response>()
+    private val _addresses = MutableLiveData(Response())
     val addresses: LiveData<Response> = _addresses
 
     fun updateSearchText(text: String){

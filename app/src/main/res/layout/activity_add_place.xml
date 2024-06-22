@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/create_sign_icon"
-                    tools:src="@drawable/create_sign_icon" />
+                    tools:src="@drawable/create_sign_icon"
+                    android:contentDescription="@string/add_place_icon" />
 
                 <TextView
                     android:id="@+id/addressTextView"
@@ -45,7 +46,7 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="40dp"
-                    android:text="TextView"
+                    android:text=""
                     android:textAlignment="center"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -72,7 +73,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@color/white"
                     android:ems="10"
-                    android:hint="Add place name."
+                    android:hint="@string/add_place_name"
                     android:inputType="text|textUri"
                     android:paddingStart="20dp"
                     android:textStyle="bold"
@@ -99,7 +100,8 @@
                     android:clickable="true"
                     app:layout_constraintEnd_toStartOf="@+id/star2"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
-                    app:srcCompat="@drawable/star_filled_icon" />
+                    app:srcCompat="@drawable/star_plain_icon"
+                    android:focusable="true" />
 
                 <ImageView
                     android:id="@+id/star2"
@@ -110,7 +112,8 @@
                     android:clickable="true"
                     app:layout_constraintEnd_toStartOf="@+id/star3"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
-                    app:srcCompat="@drawable/star_filled_icon" />
+                    app:srcCompat="@drawable/star_plain_icon"
+                    android:focusable="true" />
 
                 <ImageView
                     android:id="@+id/star3"
@@ -121,7 +124,8 @@
                     android:clickable="true"
                     app:layout_constraintEnd_toStartOf="@+id/star4"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
-                    app:srcCompat="@drawable/star_filled_icon" />
+                    app:srcCompat="@drawable/star_plain_icon"
+                    android:focusable="true" />
 
                 <ImageView
                     android:id="@+id/star4"
@@ -132,7 +136,8 @@
                     android:clickable="true"
                     app:layout_constraintEnd_toStartOf="@+id/star5"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
-                    app:srcCompat="@drawable/star_filled_icon" />
+                    app:srcCompat="@drawable/star_plain_icon"
+                    android:focusable="true" />
 
                 <ImageView
                     android:id="@+id/star5"
@@ -143,7 +148,8 @@
                     android:clickable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText"
-                    app:srcCompat="@drawable/star_plain_icon" />
+                    app:srcCompat="@drawable/star_plain_icon"
+                    android:focusable="true" />
 
                 <TextView
                     android:id="@+id/textView6"
@@ -151,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="12dp"
-                    android:text="Visited"
+                    android:text="@string/visited"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/visitedCheckBox"
                     app:layout_constraintTop_toBottomOf="@+id/placeNameEditText" />
@@ -201,7 +207,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/edit_text_bg"
                     android:ems="10"
-                    android:hint="Please give comment here !"
+                    android:hint="@string/please_give_comment_here"
                     android:includeFontPadding="false"
                     android:inputType="text|textShortMessage|textMultiLine"
                     android:maxLines="3"
@@ -220,7 +226,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@color/white"
                     android:ems="10"
-                    android:hint="Add phone number."
+                    android:hint="@string/add_phone_number"
                     android:inputType="phone"
                     android:paddingStart="40dp"
                     android:textStyle="italic"
@@ -237,7 +243,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@color/white"
                     android:ems="10"
-                    android:hint="Add website link."
+                    android:hint="@string/add_website_link"
                     android:inputType="text|textUri"
                     android:paddingStart="40dp"
                     android:textStyle="italic"
@@ -264,7 +270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:text="Set a Reminder for this place"
+                    android:text="@string/set_a_reminder_for_this_place"
                     android:textSize="18sp"
                     android:textStyle="italic"
                     app:layout_constraintStart_toStartOf="parent"
@@ -286,7 +292,7 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/white"
-                    android:text="Remove"
+                    android:text="@string/remove"
                     android:textColor="@color/primaryColor"
                     app:cornerRadius="5dp"
                     app:layout_constraintEnd_toStartOf="@+id/saveBtn"
@@ -303,7 +309,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
-                    android:text="Save"
+                    android:text="@string/save"
                     app:cornerRadius="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -371,7 +377,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/edit_text_bg"
                         android:ems="10"
-                        android:hint="Your reminder note !"
+                        android:hint="@string/your_reminder_note"
                         android:includeFontPadding="false"
                         android:inputType="text|textShortMessage|textMultiLine"
                         android:maxLines="3"

@@ -8,7 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ca.tanle.mapluv.R
+import ca.tanle.mapluv.data.remote.Address
+import ca.tanle.mapluv.data.remote.Geometry
+import ca.tanle.mapluv.data.remote.LocationR
 import ca.tanle.mapluv.databinding.FragmentAddressBinding
 import ca.tanle.mapluv.network.AddressRepository
 import ca.tanle.mapluv.network.RetrofitProvider
@@ -24,6 +29,8 @@ class AddressFragment : Fragment() {
     private var param2: String? = null
     private lateinit var binding: FragmentAddressBinding
     private lateinit var searchAddressViewModel: SearchAddressViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var researchAddAdapter: SearchAddressAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +52,13 @@ class AddressFragment : Fragment() {
         searchAddressViewModel = ViewModelProvider(this)[SearchAddressViewModel::class.java]
         val addressRepository = AddressRepository()
 
+        researchAddAdapter = SearchAddressAdapter(searchAddressViewModel.addresses.value?.results!!)
+//        val a1 = Address("1", Geometry(LocationR(1.0, 1.0), "a"), "hihi")
+        recyclerView = binding.searchAddRC
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+
+        recyclerView.adapter = researchAddAdapter
+
         binding.etName.addTextChangedListener(){
             searchAddressViewModel.updateSearchText(it.toString())
         }
@@ -53,8 +67,9 @@ class AddressFragment : Fragment() {
             searchAddressViewModel.getSearchAddress(RetrofitProvider.retrofit, addressRepository)
         }
 
-        searchAddressViewModel.addresses.observe(viewLifecycleOwner){
+        searchAddressViewModel.addresses.observe(requireActivity()){
             Log.d("SearchPlaces", it.toString())
+            researchAddAdapter.updateDataSet(it.results)
         }
 
         return binding.root
