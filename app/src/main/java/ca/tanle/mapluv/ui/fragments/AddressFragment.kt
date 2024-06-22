@@ -52,8 +52,7 @@ class AddressFragment : Fragment() {
         searchAddressViewModel = ViewModelProvider(this)[SearchAddressViewModel::class.java]
         val addressRepository = AddressRepository()
 
-        researchAddAdapter = SearchAddressAdapter(searchAddressViewModel.addresses.value?.results!!)
-//        val a1 = Address("1", Geometry(LocationR(1.0, 1.0), "a"), "hihi")
+        researchAddAdapter = SearchAddressAdapter(arrayListOf())
         recyclerView = binding.searchAddRC
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
@@ -68,7 +67,6 @@ class AddressFragment : Fragment() {
         }
 
         searchAddressViewModel.addresses.observe(requireActivity()){
-            Log.d("SearchPlaces", it.toString())
             researchAddAdapter.updateDataSet(it.results)
         }
 

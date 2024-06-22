@@ -37,26 +37,38 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
         val addressRepository = AddressRepository()
 
         val bundle = intent.extras!!
-        val latLng = bundle.getDouble("lat").toString()+","+bundle.getDouble("lng").toString()
-        placeViewModel.addLatLng(bundle.getDouble("lat"), bundle.getDouble("lng"))
-        viewModel.getAddress(RetrofitProvider.retrofit, addressRepository, latLng)
+        val mode = bundle.getString("mode")
 
-        viewModel.address.observe(this){
-            binding.addressTextView.text = it
-            placeViewModel.addPlaceAddress(it)
+        if(mode == "cdn"){
+            val latLng = bundle.getDouble("lat").toString()+","+bundle.getDouble("lng").toString()
+            placeViewModel.addLatLng(bundle.getDouble("lat"), bundle.getDouble("lng"))
+            viewModel.getAddress(RetrofitProvider.retrofit, addressRepository, latLng)
+
+            viewModel.address.observe(this){
+                binding.addressTextView.text = it
+                placeViewModel.addPlaceAddress(it)
+            }
+        }else if(mode == "add"){
+            val name = bundle.getString("name")
+            val address = bundle.getString("address")
+
+            binding.addressTextView.text = address
+            binding.placeNameEditText.setText(name)
         }
+
 
         binding.saveBtn.setOnClickListener() {
             Log.d("Place", placeViewModel.place.value.toString())
             placeViewModel.addNewPlace(placeViewModel.place.value!!)
         }
+
         setUpLayout()
 
-        placeViewModel.getAllPlaces()
-
-        placeViewModel.places.observe(this){
-            Log.d("Place List", it.toString())
-        }
+//        placeViewModel.getAllPlaces()
+//
+//        placeViewModel.places.observe(this){
+//            Log.d("Place List", it.toString())
+//        }
     }
 
     private fun setUpLayout() {

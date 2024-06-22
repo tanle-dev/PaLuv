@@ -53,6 +53,7 @@ class CoordinatesFragment : Fragment() {
             val bundle = Bundle()
             bundle.putDouble("lat", coordinatesViewModel.coordinate.value!!.latitude)
             bundle.putDouble("lng", coordinatesViewModel.coordinate.value!!.longitude)
+            bundle.putString("mode", "cdn")
             val intent = Intent(requireActivity(), AddPlaceActivity::class.java).apply {
                 putExtras(bundle)
             }
