@@ -14,9 +14,8 @@ import kotlinx.coroutines.launch
 
 class PlacesViewModel: ViewModel() {
 
-    val _places = MutableLiveData<List<Place>>()
+    private val _places = MutableLiveData<List<Place>>()
     val places: LiveData<List<Place>> = _places
-//        placeRepository.getAllPlaces()
 
     private val _place = MutableLiveData(Place())
     val place: LiveData<Place> = _place

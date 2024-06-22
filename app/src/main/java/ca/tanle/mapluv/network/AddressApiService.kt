@@ -17,4 +17,10 @@ interface AddressApiService {
         @Query("latlng") latlng: String,
         @Query("key") apiKey: String
     ): Response
+
+    @GET("maps/api/place/textsearch/json")
+    suspend fun getSearchAddress(
+        @Query("query") searchText: String,
+        @Query("key") apiKey: String
+    ): Response
 }
