@@ -5,14 +5,15 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Response(
-    val results: List<Address>,
-    val status: String
+    val results: ArrayList<Address> = arrayListOf(),
+    val status: String = ""
 ): Parcelable
 
 @Parcelize
 data class Address(
     val formatted_address: String,
-    val geometry: Geometry
+    val geometry: Geometry,
+    val name: String
 ): Parcelable
 
 @Parcelize

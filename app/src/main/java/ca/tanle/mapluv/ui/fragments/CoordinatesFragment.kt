@@ -46,13 +46,14 @@ class CoordinatesFragment : Fragment() {
     }
 
     private fun setUpCoordinateFragment(){
-        binding.tvLat.text = "Latitude: " + String.format("%.6f", coordinatesViewModel.coordinate.value?.latitude)
-        binding.tvLng.text = "Longitude: " + String.format("%.6f", coordinatesViewModel.coordinate.value?.longitude)
+        binding.tvLatVal.text = String.format("%.6f", coordinatesViewModel.coordinate.value?.latitude)
+        binding.tvLngVal.text = String.format("%.6f", coordinatesViewModel.coordinate.value?.longitude)
 
         binding.addPlaceBtn.setOnClickListener{
             val bundle = Bundle()
             bundle.putDouble("lat", coordinatesViewModel.coordinate.value!!.latitude)
             bundle.putDouble("lng", coordinatesViewModel.coordinate.value!!.longitude)
+            bundle.putString("mode", "cdn")
             val intent = Intent(requireActivity(), AddPlaceActivity::class.java).apply {
                 putExtras(bundle)
             }

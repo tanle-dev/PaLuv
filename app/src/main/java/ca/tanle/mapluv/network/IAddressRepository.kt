@@ -6,4 +6,6 @@ import retrofit2.Retrofit
 
 interface IAddressRepository {
     suspend fun getAddress(retrofit: Retrofit, latLng: String) : Response
+
+    suspend fun getSearchAddress(retrofit: Retrofit, searchText: String): Response
 }
