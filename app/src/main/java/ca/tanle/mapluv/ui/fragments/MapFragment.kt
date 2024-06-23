@@ -23,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener
+import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -32,8 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarkerClickListener,
-    GoogleMap.OnMyLocationClickListener {
+class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarkerClickListener, OnMyLocationButtonClickListener{
 
 
     private lateinit var googleMap: GoogleMap
@@ -66,6 +66,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarker
     @SuppressLint("MissingPermission")
     fun enableMapFeatures(){
         googleMap.setOnMapClickListener(this);
+        googleMap.setOnMyLocationButtonClickListener(this)
         googleMap.isMyLocationEnabled = true
         googleMap.uiSettings.let {
             it.isZoomControlsEnabled= true
@@ -125,6 +126,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarker
             locationUtils.fusedLocationClient.lastLocation.addOnSuccessListener {
                 val location = LatLng(it.latitude, it.longitude)
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 13f))
+                coordinatesViewModel.setCoordinate(location)
             }
         }
     }
@@ -164,7 +166,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarker
         return  true
     }
 
-    override fun onMyLocationClick(p0: Location) {
-        coordinatesViewModel.setCoordinate(LatLng(p0.latitude, p0.longitude))
+    override fun onMyLocationButtonClick(): Boolean {
+        getDeviceLocation()
+        googleMap.clear()
+        return true
     }
 }

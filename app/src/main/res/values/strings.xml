@@ -12,4 +12,8 @@
     <string name="visited">Visited</string>
     <string name="add_place_name">Add place name.</string>
     <string name="add_place_icon">Add Place Icon</string>
+    <string name="latitude">Latitude:</string>
+    <string name="marker_coordinates">Marker Coordinates</string>
+    <string name="add">ADD</string>
+    <string name="longitude">Longitude:</string>
 </resources>

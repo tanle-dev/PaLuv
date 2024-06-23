@@ -46,8 +46,8 @@ class CoordinatesFragment : Fragment() {
     }
 
     private fun setUpCoordinateFragment(){
-        binding.tvLat.text = "Latitude: " + String.format("%.6f", coordinatesViewModel.coordinate.value?.latitude)
-        binding.tvLng.text = "Longitude: " + String.format("%.6f", coordinatesViewModel.coordinate.value?.longitude)
+        binding.tvLatVal.text = String.format("%.6f", coordinatesViewModel.coordinate.value?.latitude)
+        binding.tvLngVal.text = String.format("%.6f", coordinatesViewModel.coordinate.value?.longitude)
 
         binding.addPlaceBtn.setOnClickListener{
             val bundle = Bundle()
