@@ -21,37 +21,37 @@ object Graph{
         PlaceRepository(roomDatabase.placeDao(), firebaseFirestore)
     }
 
-    val MIGRATION_1_2: Migration = object : Migration(1, 2) {
-        // From version 1 to version 2
-        override fun migrate(db: SupportSQLiteDatabase) {
-            // Remove the table
-//            db.execSQL("DROP TABLE place_table") // Use the right table name
+    val MIGRATION_1_2 = object : Migration(1, 2) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            // Assuming 'place_table' is the table name and 'photo_link' is the column name
+            database.execSQL("ALTER TABLE place_table RENAME TO place_table_tmp");
 
-            // OR: We could update it, by using an ALTER query
+            database.execSQL("CREATE TABLE place_table (" +
+                    "id TEXT NOT NULL PRIMARY KEY, " +
+                    "title TEXT NOT NULL, " +
+                    "visited INTEGER NOT NULL, " +
+                    "lat REAL NOT NULL, " +
+                    "lng REAL NOT NULL, " +
+                    "address TEXT NOT NULL, " +
+                    "comment TEXT NOT NULL, " +
+                    "rate INTEGER NOT NULL, " +
+                    "phone_number TEXT NOT NULL, " +
+                    "web_link TEXT NOT NULL, " +
+                    "reminder_title TEXT NOT NULL, " +
+                    "reminder_date TEXT NOT NULL, " +
+                    "reminder_time TEXT NOT NULL, " +
+                    "photo_link TEXT NOT NULL)");  // Change from NOT NULL to nullable
 
-            // OR: If needed, we can create the table again with the required settings
-             db.execSQL("CREATE TABLE IF NOT EXISTS place_table (" +
-                     "id INTEGER PRIMARY KEY," +
-                     "title TEXT NOT NULL," +
-                     "visited BOOLEAN," +
-                     "lat REAL, " +
-                     "lng REAL," +
-                     "address TEXT" +
-                     "comment TEXT," +
-                     "rate INTEGER," +
-                     "phone TEXT," +
-                     "web_link TEXT," +
-                     "reminder_title," +
-                     "reminder_date," +
-                     "reminder_time)"
-             )
+            database.execSQL("INSERT INTO place_table (id, title, visited, lat, lng, address, comment, rate, phone_number, web_link, reminder_title, reminder_date, reminder_time, photo_link) " +
+                    "SELECT id, title, visited, lat, lng, address, comment, rate, phone_number, web_link, reminder_title, reminder_date, reminder_time, photo_link FROM place_table_tmp");
+
+            database.execSQL("DROP TABLE place_table_tmp");
         }
     }
 
     fun provide(context: Context){
-        roomDatabase = Room.databaseBuilder(context = context, PlaceDatabase::class.java, "places.db")
-//            .addMigrations(MIGRATION_1_2)
-            .build()
+        roomDatabase = Room.databaseBuilder(context = context, PlaceDatabase::class.java, "places.db").addMigrations(
+            MIGRATION_1_2).build()
         firebaseFirestore = PlaceFirebase()
     }
 }

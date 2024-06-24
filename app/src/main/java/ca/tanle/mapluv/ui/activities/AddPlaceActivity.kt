@@ -16,6 +16,7 @@ import ca.tanle.mapluv.data.models.Place
 import ca.tanle.mapluv.databinding.ActivityAddPlaceBinding
 import ca.tanle.mapluv.databinding.ActivityEditBinding
 import ca.tanle.mapluv.network.AddressRepository
+import ca.tanle.mapluv.network.IAddressRepository
 import ca.tanle.mapluv.network.RetrofitProvider
 import ca.tanle.mapluv.utils.DatePickerFragment
 import ca.tanle.mapluv.utils.IDate
@@ -26,6 +27,7 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
     lateinit var binding: ActivityAddPlaceBinding
     private lateinit var viewModel: AddressViewModel
     private lateinit var placeViewModel: PlacesViewModel
+    private lateinit var addressRepository: IAddressRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPlaceBinding.inflate(layoutInflater)
@@ -34,7 +36,7 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
         viewModel = ViewModelProvider(this)[AddressViewModel::class.java]
         placeViewModel = ViewModelProvider(this)[PlacesViewModel::class.java]
 
-        val addressRepository = AddressRepository()
+        addressRepository = AddressRepository()
 
         val bundle = intent.extras!!
         val mode = bundle.getString("mode")
@@ -48,27 +50,42 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
                 binding.addressTextView.text = it
                 placeViewModel.addPlaceAddress(it)
             }
+
+            viewModel.id.observe(this){
+                placeViewModel.addPlaceId(it)
+                getPhotoLink()
+            }
         }else if(mode == "add"){
             val name = bundle.getString("name")
             val address = bundle.getString("address")
+            val id = bundle.getString("id")
 
             binding.addressTextView.text = address
             binding.placeNameEditText.setText(name)
+            placeViewModel.addPlaceId(id!!)
+
+            getPhotoLink()
         }
 
 
         binding.saveBtn.setOnClickListener() {
-            Log.d("Place", placeViewModel.place.value.toString())
             placeViewModel.addNewPlace(placeViewModel.place.value!!)
         }
 
         setUpLayout()
 
-//        placeViewModel.getAllPlaces()
-//
-//        placeViewModel.places.observe(this){
-//            Log.d("Place List", it.toString())
-//        }
+        placeViewModel.getAllPlaces()
+        placeViewModel.places.observe(this){
+            Log.d("Place List", it.toString())
+        }
+    }
+
+    private fun getPhotoLink(){
+        viewModel.getPhotoLink(RetrofitProvider.retrofit, addressRepository, placeViewModel.place.value!!.id)
+        viewModel.link.observe(this){
+            placeViewModel.addPhotoLink(it)
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setUpLayout() {

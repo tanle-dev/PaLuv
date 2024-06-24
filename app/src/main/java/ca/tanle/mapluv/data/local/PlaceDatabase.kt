@@ -6,7 +6,7 @@ import ca.tanle.mapluv.data.models.Place
 
 @Database(
     entities = [Place::class],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class PlaceDatabase: RoomDatabase() {

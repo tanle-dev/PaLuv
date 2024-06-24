@@ -20,4 +20,5 @@ data class Place(
     @ColumnInfo("reminder_title") var reminderTitle: String = "",
     @ColumnInfo("reminder_date") var reminderDate: String = "",
     @ColumnInfo("reminder_time") var reminderTime: String = "",
+    @ColumnInfo("photo_link") var photoLink: String = ""
 )

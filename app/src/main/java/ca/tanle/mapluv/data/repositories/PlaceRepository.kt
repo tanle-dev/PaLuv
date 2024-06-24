@@ -26,4 +26,8 @@ class PlaceRepository(private val localDao: PlaceDao, private val remoteDao: Pla
     suspend fun deleteAPlace(place: Place) {
         localDao.deleteAPlace(place)
     }
+
+    suspend fun deleteAll(){
+        localDao.deleteAll()
+    }
 }

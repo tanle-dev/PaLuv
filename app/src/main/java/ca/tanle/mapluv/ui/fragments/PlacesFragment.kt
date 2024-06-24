@@ -1,11 +1,15 @@
 package ca.tanle.mapluv.ui.fragments
 
+import android.os.Binder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
+import ca.tanle.mapluv.databinding.FragmentPlacesBinding
+import ca.tanle.mapluv.ui.activities.PlacesViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,6 +20,8 @@ class PlacesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var placeViewModel: PlacesViewModel
+    private lateinit var binding: FragmentPlacesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +36,14 @@ class PlacesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_places, container, false)
+        placeViewModel = ViewModelProvider(this)[PlacesViewModel::class.java]
+        binding = FragmentPlacesBinding.inflate(inflater)
+
+        placeViewModel.places.observe(requireActivity()){
+
+        }
+
+        return binding.root
     }
 
     companion object {

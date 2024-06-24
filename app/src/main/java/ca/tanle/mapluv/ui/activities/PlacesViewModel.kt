@@ -30,7 +30,11 @@ class PlacesViewModel: ViewModel() {
     fun addNewPlace(place: Place, placeRepository: PlaceRepository = Graph.placeRepository) {
         viewModelScope.launch(Dispatchers.IO) {
             placeRepository.addPlace(place)
+//            placeRepository.deleteAll()
         }
+    }
+    fun addPlaceId(id: String){
+        place.value?.id = id
     }
 
     fun addPlaceName(name: String){
@@ -76,5 +80,9 @@ class PlacesViewModel: ViewModel() {
 
     fun addReTime(time: String){
         place.value?.reminderTime = time
+    }
+
+    fun addPhotoLink(link: String){
+        place.value?.photoLink = link
     }
 }

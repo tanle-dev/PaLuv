@@ -36,6 +36,7 @@ class SearchAddressAdapter(var data: ArrayList<Address>): RecyclerView.Adapter<S
             val bundle = Bundle()
             bundle.putString("name", data[position].name)
             bundle.putString("address", data[position].formatted_address)
+            bundle.putString("id", data[position].place_id)
             bundle.putString("mode", "add")
 
             val intent = Intent(it.context, AddPlaceActivity::class.java).apply {
