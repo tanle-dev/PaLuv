@@ -1,9 +1,7 @@
 package ca.tanle.mapluv.data.repositories
 
-import androidx.lifecycle.LiveData
 import ca.tanle.mapluv.data.local.PlaceDao
 import ca.tanle.mapluv.data.models.Place
-import ca.tanle.mapluv.data.models.Places
 import ca.tanle.mapluv.data.remote.PlaceFirebase
 
 class PlaceRepository(private val localDao: PlaceDao, private val remoteDao: PlaceFirebase) {

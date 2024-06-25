@@ -2,6 +2,7 @@ package ca.tanle.mapluv.ui.fragments
 
 import android.os.Binder
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.FragmentPlacesBinding
+import ca.tanle.mapluv.network.AddressRepository
+import ca.tanle.mapluv.network.RetrofitProvider
+import ca.tanle.mapluv.ui.activities.AddressViewModel
 import ca.tanle.mapluv.ui.activities.PlacesViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,6 +25,7 @@ class PlacesFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var placeViewModel: PlacesViewModel
+    private lateinit var addressViewModel: AddressViewModel
     private lateinit var binding: FragmentPlacesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +44,17 @@ class PlacesFragment : Fragment() {
         placeViewModel = ViewModelProvider(this)[PlacesViewModel::class.java]
         binding = FragmentPlacesBinding.inflate(inflater)
 
-        placeViewModel.places.observe(requireActivity()){
+        addressViewModel = ViewModelProvider(this)[AddressViewModel::class.java]
+        val repository = AddressRepository()
 
+        placeViewModel.getAllPlaces()
+
+        placeViewModel.places.observe(requireActivity()){
+            addressViewModel.getPlacePhoto(RetrofitProvider.retrofit, repository, it[1].photoLink)
+        }
+
+        addressViewModel.photo.observe(requireActivity()){
+//            binding.placeImg.setImageBitmap(it)
         }
 
         return binding.root

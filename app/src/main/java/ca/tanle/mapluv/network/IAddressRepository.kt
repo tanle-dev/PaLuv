@@ -1,8 +1,10 @@
 package ca.tanle.mapluv.network
 
+import android.graphics.Bitmap
 import ca.tanle.mapluv.data.remote.DResponse
 import ca.tanle.mapluv.data.remote.Response
 import com.google.android.gms.maps.model.LatLng
+import okhttp3.ResponseBody
 import retrofit2.Retrofit
 
 interface IAddressRepository {
@@ -12,5 +14,5 @@ interface IAddressRepository {
 
     suspend fun getDetailPlace(retrofit: Retrofit, id: String): DResponse
 
-    suspend fun getPhotoPlace(retrofit: Retrofit, ref: String): String
+    suspend fun getPhotoPlace(retrofit: Retrofit, ref: String): ResponseBody
 }

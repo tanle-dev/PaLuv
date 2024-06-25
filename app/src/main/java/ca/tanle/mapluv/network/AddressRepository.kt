@@ -1,7 +1,9 @@
 package ca.tanle.mapluv.network
 
+import android.graphics.Bitmap
 import ca.tanle.mapluv.data.remote.DResponse
 import ca.tanle.mapluv.data.remote.Response
+import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.create
 
@@ -28,7 +30,7 @@ class AddressRepository: IAddressRepository {
         return response
     }
 
-    override suspend fun getPhotoPlace(retrofit: Retrofit, ref: String): String {
+    override suspend fun getPhotoPlace(retrofit: Retrofit, ref: String): ResponseBody {
         val addressService = retrofit.create(AddressApiService::class.java)
         val response = addressService.getPhotoPlace(pRef = ref, apiKey = API_KEY)
 

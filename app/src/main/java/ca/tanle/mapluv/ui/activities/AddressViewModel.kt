@@ -1,11 +1,14 @@
 package ca.tanle.mapluv.ui.activities
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.network.IAddressRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +23,12 @@ class AddressViewModel: ViewModel() {
 
     private val _link = MutableLiveData<String>()
     val link: LiveData<String> = _link
+
+    private val _photo = MutableLiveData<Bitmap>()
+    val photo: LiveData<Bitmap> = _photo
+
+    private val _placeList = MutableLiveData<List<PlaceItem>>()
+    val placeList: LiveData<List<PlaceItem>> = _placeList
 
     fun getAddress(retrofit: Retrofit, repository: IAddressRepository, latLng: String){
         viewModelScope.launch {
@@ -39,6 +48,18 @@ class AddressViewModel: ViewModel() {
             } else {
                 // Handle the case where photos are not available
                 _link.postValue("No Photo Ref")
+            }
+        }
+    }
+
+    fun getPlacePhoto(retrofit: Retrofit, repository: IAddressRepository, photoRef: String){
+        if(photoRef.isNotEmpty()){
+            viewModelScope.launch (Dispatchers.IO){
+                val responseBody = repository.getPhotoPlace(retrofit, photoRef)
+                val bitmap = responseBody.byteStream().use {
+                    BitmapFactory.decodeStream(it)
+                }
+                _photo.postValue(bitmap)
             }
         }
     }

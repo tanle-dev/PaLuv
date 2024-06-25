@@ -1,12 +1,10 @@
 package ca.tanle.mapluv.ui.activities
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.tanle.mapluv.data.models.Place
-import ca.tanle.mapluv.data.models.Places
 import ca.tanle.mapluv.data.repositories.PlaceRepository
 import ca.tanle.mapluv.utils.Graph
 import kotlinx.coroutines.Dispatchers
