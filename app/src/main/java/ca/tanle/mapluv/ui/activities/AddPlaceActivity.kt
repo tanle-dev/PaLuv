@@ -22,6 +22,9 @@ import ca.tanle.mapluv.utils.DatePickerFragment
 import ca.tanle.mapluv.utils.IDate
 import ca.tanle.mapluv.utils.ITime
 import ca.tanle.mapluv.utils.TimePickerFragment
+import com.google.type.DateTime
+import java.util.Calendar
+import java.util.Date
 
 class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
     lateinit var binding: ActivityAddPlaceBinding
@@ -178,6 +181,8 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
             placeViewModel.addReTitle(it.toString())
         }
 
+        binding.datePickerBtn.text =
+            getString(R.string.date_text_btn, Date().date, Date().month + 1, Date().year + 1900)
         binding.datePickerBtn.setOnClickListener{
             val newFragment = DatePickerFragment()
             newFragment.show(supportFragmentManager, "datePicker")

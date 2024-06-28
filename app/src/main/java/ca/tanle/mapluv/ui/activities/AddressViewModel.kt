@@ -8,9 +8,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ca.tanle.mapluv.data.models.Place
 import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.network.IAddressRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 
@@ -24,11 +26,8 @@ class AddressViewModel: ViewModel() {
     private val _link = MutableLiveData<String>()
     val link: LiveData<String> = _link
 
-    private val _photo = MutableLiveData<Bitmap>()
-    val photo: LiveData<Bitmap> = _photo
-
-    private val _placeList = MutableLiveData<List<PlaceItem>>()
-    val placeList: LiveData<List<PlaceItem>> = _placeList
+    private val _placeList = MutableLiveData<ArrayList<PlaceItem>>(arrayListOf())
+    val placeList: LiveData<ArrayList<PlaceItem>> = _placeList
 
     fun getAddress(retrofit: Retrofit, repository: IAddressRepository, latLng: String){
         viewModelScope.launch {
@@ -52,14 +51,29 @@ class AddressViewModel: ViewModel() {
         }
     }
 
-    fun getPlacePhoto(retrofit: Retrofit, repository: IAddressRepository, photoRef: String){
-        if(photoRef.isNotEmpty()){
-            viewModelScope.launch (Dispatchers.IO){
+    private suspend fun getPlacePhoto(retrofit: Retrofit, repository: IAddressRepository, photoRef: String): Bitmap?{
+        return if(photoRef.isNotEmpty()){
+            val def = viewModelScope.async(Dispatchers.IO){
                 val responseBody = repository.getPhotoPlace(retrofit, photoRef)
-                val bitmap = responseBody.byteStream().use {
+                responseBody.byteStream().use {
                     BitmapFactory.decodeStream(it)
                 }
-                _photo.postValue(bitmap)
+            }
+            def.await()
+        }else null
+    }
+
+    fun getPlaceList(retrofit: Retrofit, repository: IAddressRepository, places: List<Place>){
+        viewModelScope.launch {
+            for (place in places){
+                val photo = getPlacePhoto(retrofit, repository, place.photoLink)
+                val placeItem = PlaceItem(place, photo)
+
+                _placeList.value.let {
+                    it?.add(placeItem)
+
+                    _placeList.value = it
+                }
             }
         }
     }

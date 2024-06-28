@@ -16,4 +16,6 @@
     <string name="marker_coordinates">Marker Coordinates</string>
     <string name="add">ADD</string>
     <string name="longitude">Longitude:</string>
+    <string name="date_text_btn">%1$s/%2$s/%3$s</string>
+    <string name="cancel">Cancel</string>
 </resources>

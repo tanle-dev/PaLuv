@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.data.models.Place
+import ca.tanle.mapluv.data.models.PlaceItem
 
-class PlaceListAdapter(val data: ArrayList<Place>): RecyclerView.Adapter<ViewHolder>(){
+class PlaceListAdapter(var data: ArrayList<PlaceItem>): RecyclerView.Adapter<ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.place_item, parent, false)
@@ -22,7 +23,19 @@ class PlaceListAdapter(val data: ArrayList<Place>): RecyclerView.Adapter<ViewHol
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.placeName.text = data[position].place.title
 
+        if(data[position].photo != null){
+            holder.photo.setImageBitmap(data[position].photo)
+        }else{
+            holder.photo.setImageResource(R.drawable.place_placeholder)
+        }
+
+    }
+
+    fun updateDataChanged(data: ArrayList<PlaceItem>){
+        this.data = data
+        notifyDataSetChanged()
     }
 }
 

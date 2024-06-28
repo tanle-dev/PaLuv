@@ -7,7 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.FragmentPlacesBinding
 import ca.tanle.mapluv.network.AddressRepository
@@ -27,6 +31,7 @@ class PlacesFragment : Fragment() {
     private lateinit var placeViewModel: PlacesViewModel
     private lateinit var addressViewModel: AddressViewModel
     private lateinit var binding: FragmentPlacesBinding
+    private lateinit var recyclerView : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,15 +51,20 @@ class PlacesFragment : Fragment() {
 
         addressViewModel = ViewModelProvider(this)[AddressViewModel::class.java]
         val repository = AddressRepository()
-
         placeViewModel.getAllPlaces()
 
+        val placeListAdapter = PlaceListAdapter(arrayListOf())
+        recyclerView = binding.placeListRCV
+        recyclerView.layoutManager = GridLayoutManager(activity, 2)
+
+        recyclerView.adapter = placeListAdapter
+
         placeViewModel.places.observe(requireActivity()){
-            addressViewModel.getPlacePhoto(RetrofitProvider.retrofit, repository, it[1].photoLink)
+            addressViewModel.getPlaceList(RetrofitProvider.retrofit, repository, it)
         }
 
-        addressViewModel.photo.observe(requireActivity()){
-//            binding.placeImg.setImageBitmap(it)
+        addressViewModel.placeList.observe(requireActivity()){
+            placeListAdapter.updateDataChanged(it)
         }
 
         return binding.root

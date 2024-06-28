@@ -26,5 +26,5 @@ data class Place(
 
 data class PlaceItem(
     var place: Place,
-    var photo: Bitmap
+    var photo: Bitmap?
 )
