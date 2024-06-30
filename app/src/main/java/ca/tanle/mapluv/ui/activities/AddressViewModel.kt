@@ -53,17 +53,23 @@ class AddressViewModel: ViewModel() {
 
     private suspend fun getPlacePhoto(retrofit: Retrofit, repository: IAddressRepository, photoRef: String): Bitmap?{
         return if(photoRef.isNotEmpty()){
-            val def = viewModelScope.async(Dispatchers.IO){
-                val responseBody = repository.getPhotoPlace(retrofit, photoRef)
-                responseBody.byteStream().use {
-                    BitmapFactory.decodeStream(it)
+            try {
+                val def = viewModelScope.async(Dispatchers.IO){
+                    val responseBody = repository.getPhotoPlace(retrofit, photoRef)
+                    Log.d("Error here", photoRef)
+                    responseBody.byteStream().use {
+                        BitmapFactory.decodeStream(it)
+                    }
                 }
+                def.await()
+            }catch (e: Exception){
+                return null
             }
-            def.await()
         }else null
     }
 
     fun getPlaceList(retrofit: Retrofit, repository: IAddressRepository, places: List<Place>){
+        _placeList.value = arrayListOf()
         viewModelScope.launch {
             for (place in places){
                 val photo = getPlacePhoto(retrofit, repository, place.photoLink)

@@ -73,6 +73,11 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
 
         binding.saveBtn.setOnClickListener() {
             placeViewModel.addNewPlace(placeViewModel.place.value!!)
+            val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra("addOrEdit", true)
+            }
+            startActivity(intent)
+            finish()
         }
 
         setUpLayout()

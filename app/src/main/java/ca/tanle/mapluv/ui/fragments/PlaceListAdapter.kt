@@ -9,8 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.data.models.Place
 import ca.tanle.mapluv.data.models.PlaceItem
+import ca.tanle.mapluv.utils.OnPlaceItemClickListener
 
-class PlaceListAdapter(var data: ArrayList<PlaceItem>): RecyclerView.Adapter<ViewHolder>(){
+class PlaceListAdapter(
+    private val listener: OnPlaceItemClickListener,
+    private var data: ArrayList<PlaceItem>
+): RecyclerView.Adapter<ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.place_item, parent, false)
@@ -31,6 +35,9 @@ class PlaceListAdapter(var data: ArrayList<PlaceItem>): RecyclerView.Adapter<Vie
             holder.photo.setImageResource(R.drawable.place_placeholder)
         }
 
+        holder.itemView.setOnClickListener {
+            listener.onPlaceItemClick(data[position])
+        }
     }
 
     fun updateDataChanged(data: ArrayList<PlaceItem>){

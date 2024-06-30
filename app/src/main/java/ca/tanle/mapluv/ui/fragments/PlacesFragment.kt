@@ -13,18 +13,22 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.tanle.mapluv.R
+import ca.tanle.mapluv.data.models.Place
+import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.databinding.FragmentPlacesBinding
 import ca.tanle.mapluv.network.AddressRepository
 import ca.tanle.mapluv.network.RetrofitProvider
 import ca.tanle.mapluv.ui.activities.AddressViewModel
 import ca.tanle.mapluv.ui.activities.PlacesViewModel
+import ca.tanle.mapluv.utils.OnPlaceItemClickListener
+import ca.tanle.mapluv.utils.OnRemoveItemUpdateListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class PlacesFragment : Fragment() {
+class PlacesFragment : Fragment(), OnPlaceItemClickListener, OnRemoveItemUpdateListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -53,17 +57,19 @@ class PlacesFragment : Fragment() {
         val repository = AddressRepository()
         placeViewModel.getAllPlaces()
 
-        val placeListAdapter = PlaceListAdapter(arrayListOf())
+        val placeListAdapter = PlaceListAdapter(this, arrayListOf())
         recyclerView = binding.placeListRCV
         recyclerView.layoutManager = GridLayoutManager(activity, 2)
 
         recyclerView.adapter = placeListAdapter
 
         placeViewModel.places.observe(requireActivity()){
+            Log.d("Places", it.toString())
             addressViewModel.getPlaceList(RetrofitProvider.retrofit, repository, it)
         }
 
         addressViewModel.placeList.observe(requireActivity()){
+            Log.d("Place list updated", it.toString())
             placeListAdapter.updateDataChanged(it)
         }
 
@@ -88,5 +94,14 @@ class PlacesFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onPlaceItemClick(placeItem: PlaceItem) {
+        val fragment = PlaceModalFragment(placeItem)
+        fragment.show(childFragmentManager, "Fragment Modal")
+    }
+
+    override fun onPlaceItemRemove() {
+        placeViewModel.getAllPlaces()
     }
 }
