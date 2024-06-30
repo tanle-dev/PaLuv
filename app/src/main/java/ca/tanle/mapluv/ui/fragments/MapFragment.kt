@@ -9,13 +9,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.location.Location
 import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.FragmentMapBinding
-import ca.tanle.mapluv.ui.activities.CoordinatesViewModel
+import ca.tanle.mapluv.ui.activities.viewmodels.CoordinatesViewModel
 import ca.tanle.mapluv.ui.activities.EditActivity
 import ca.tanle.mapluv.utils.LocationUtils
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,7 +21,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener
-import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -42,7 +39,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarker
     private lateinit var coordinatesViewModel: CoordinatesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         coordinatesViewModel = ViewModelProvider(requireActivity()).get(CoordinatesViewModel::class.java)
         super.onCreate(savedInstanceState)
     }

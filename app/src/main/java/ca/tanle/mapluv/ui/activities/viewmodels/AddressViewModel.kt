@@ -1,9 +1,8 @@
-package ca.tanle.mapluv.ui.activities
+package ca.tanle.mapluv.ui.activities.viewmodels
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -77,7 +76,6 @@ class AddressViewModel: ViewModel() {
 
                 _placeList.value.let {
                     it?.add(placeItem)
-
                     _placeList.value = it
                 }
             }

@@ -1,7 +1,6 @@
 package ca.tanle.mapluv.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.databinding.FragmentPlaceModalBinding
-import ca.tanle.mapluv.databinding.FragmentPlacesBinding
-import ca.tanle.mapluv.ui.activities.PlacesViewModel
-import ca.tanle.mapluv.utils.OnPlaceItemClickListener
+import ca.tanle.mapluv.ui.activities.viewmodels.PlacesViewModel
 import ca.tanle.mapluv.utils.OnRemoveItemUpdateListener
 
 // TODO: Rename parameter arguments, choose names that match
@@ -67,7 +64,7 @@ class PlaceModalFragment(val placeItem: PlaceItem) : DialogFragment() {
 
          binding.removePlaceBtn.setOnClickListener {
              placeViewModel.deletePlace(placeItem.place)
-             onRemovePlaceListener.onPlaceItemRemove()
+//             onRemovePlaceListener.onPlaceItemRemove()
 //             placeViewModel.getAllPlaces()
              this.dismiss()
          }

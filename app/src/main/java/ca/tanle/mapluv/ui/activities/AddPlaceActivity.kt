@@ -6,24 +6,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.ColumnInfo
 import ca.tanle.mapluv.R
-import ca.tanle.mapluv.data.models.Place
 import ca.tanle.mapluv.databinding.ActivityAddPlaceBinding
-import ca.tanle.mapluv.databinding.ActivityEditBinding
 import ca.tanle.mapluv.network.AddressRepository
 import ca.tanle.mapluv.network.IAddressRepository
 import ca.tanle.mapluv.network.RetrofitProvider
+import ca.tanle.mapluv.ui.activities.viewmodels.AddressViewModel
+import ca.tanle.mapluv.ui.activities.viewmodels.PlacesViewModel
 import ca.tanle.mapluv.utils.DatePickerFragment
 import ca.tanle.mapluv.utils.IDate
 import ca.tanle.mapluv.utils.ITime
 import ca.tanle.mapluv.utils.TimePickerFragment
-import com.google.type.DateTime
-import java.util.Calendar
 import java.util.Date
 
 class AddPlaceActivity : AppCompatActivity(), IDate, ITime {

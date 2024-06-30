@@ -1,4 +1,4 @@
-package ca.tanle.mapluv.ui.activities
+package ca.tanle.mapluv.ui.activities.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

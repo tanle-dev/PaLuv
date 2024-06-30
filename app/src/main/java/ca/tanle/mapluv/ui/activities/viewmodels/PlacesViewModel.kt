@@ -1,4 +1,4 @@
-package ca.tanle.mapluv.ui.activities
+package ca.tanle.mapluv.ui.activities.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -20,7 +20,7 @@ class PlacesViewModel: ViewModel() {
     val place: LiveData<Place> = _place
 
     fun getAllPlaces(placeRepository: PlaceRepository = Graph.placeRepository){
-        _places.value = emptyList()
+        _places.postValue(emptyList())
         viewModelScope.launch(Dispatchers.IO) {
             val fetchData = placeRepository.getAllPlaces()
             _places.postValue(fetchData)
@@ -37,6 +37,7 @@ class PlacesViewModel: ViewModel() {
     fun deletePlace(place: Place, placeRepository: PlaceRepository = Graph.placeRepository){
         viewModelScope.launch(Dispatchers.IO) {
             placeRepository.deleteAPlace(place)
+            getAllPlaces()
         }
     }
     fun addPlaceId(id: String){

@@ -1,4 +1,4 @@
-package ca.tanle.mapluv.ui.fragments
+package ca.tanle.mapluv.ui.fragments.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.tanle.mapluv.R
-import ca.tanle.mapluv.data.models.Place
 import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.utils.OnPlaceItemClickListener
 

@@ -1,20 +1,16 @@
-package ca.tanle.mapluv.ui.fragments
+package ca.tanle.mapluv.ui.fragments.adapters
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.data.remote.Address
 import ca.tanle.mapluv.ui.activities.AddPlaceActivity
-import ca.tanle.mapluv.ui.activities.EditActivity
 
 class SearchAddressAdapter(var data: ArrayList<Address>): RecyclerView.Adapter<SearchAddVH>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchAddVH {

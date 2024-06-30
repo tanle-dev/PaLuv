@@ -1,25 +1,20 @@
 package ca.tanle.mapluv.ui.fragments
 
-import android.os.Binder
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ca.tanle.mapluv.R
-import ca.tanle.mapluv.data.models.Place
 import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.databinding.FragmentPlacesBinding
 import ca.tanle.mapluv.network.AddressRepository
 import ca.tanle.mapluv.network.RetrofitProvider
-import ca.tanle.mapluv.ui.activities.AddressViewModel
-import ca.tanle.mapluv.ui.activities.PlacesViewModel
+import ca.tanle.mapluv.ui.activities.viewmodels.AddressViewModel
+import ca.tanle.mapluv.ui.activities.viewmodels.PlacesViewModel
+import ca.tanle.mapluv.ui.fragments.adapters.PlaceListAdapter
 import ca.tanle.mapluv.utils.OnPlaceItemClickListener
 import ca.tanle.mapluv.utils.OnRemoveItemUpdateListener
 
@@ -64,12 +59,10 @@ class PlacesFragment : Fragment(), OnPlaceItemClickListener, OnRemoveItemUpdateL
         recyclerView.adapter = placeListAdapter
 
         placeViewModel.places.observe(requireActivity()){
-            Log.d("Places", it.toString())
             addressViewModel.getPlaceList(RetrofitProvider.retrofit, repository, it)
         }
 
         addressViewModel.placeList.observe(requireActivity()){
-            Log.d("Place list updated", it.toString())
             placeListAdapter.updateDataChanged(it)
         }
 
