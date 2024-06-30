@@ -1,5 +1,6 @@
 package ca.tanle.mapluv.data.models
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -20,4 +21,10 @@ data class Place(
     @ColumnInfo("reminder_title") var reminderTitle: String = "",
     @ColumnInfo("reminder_date") var reminderDate: String = "",
     @ColumnInfo("reminder_time") var reminderTime: String = "",
+    @ColumnInfo("photo_link") var photoLink: String = ""
+)
+
+data class PlaceItem(
+    var place: Place,
+    var photo: Bitmap?
 )

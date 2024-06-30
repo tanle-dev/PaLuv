@@ -1,4 +1,4 @@
-package ca.tanle.mapluv.ui.activities
+package ca.tanle.mapluv.ui.activities.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.tanle.mapluv.data.models.Place
-import ca.tanle.mapluv.data.models.Places
 import ca.tanle.mapluv.data.repositories.PlaceRepository
 import ca.tanle.mapluv.utils.Graph
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +20,7 @@ class PlacesViewModel: ViewModel() {
     val place: LiveData<Place> = _place
 
     fun getAllPlaces(placeRepository: PlaceRepository = Graph.placeRepository){
+        _places.postValue(emptyList())
         viewModelScope.launch(Dispatchers.IO) {
             val fetchData = placeRepository.getAllPlaces()
             _places.postValue(fetchData)
@@ -30,7 +30,18 @@ class PlacesViewModel: ViewModel() {
     fun addNewPlace(place: Place, placeRepository: PlaceRepository = Graph.placeRepository) {
         viewModelScope.launch(Dispatchers.IO) {
             placeRepository.addPlace(place)
+//            placeRepository.deleteAll()
         }
+    }
+
+    fun deletePlace(place: Place, placeRepository: PlaceRepository = Graph.placeRepository){
+        viewModelScope.launch(Dispatchers.IO) {
+            placeRepository.deleteAPlace(place)
+            getAllPlaces()
+        }
+    }
+    fun addPlaceId(id: String){
+        place.value?.id = id
     }
 
     fun addPlaceName(name: String){
@@ -76,5 +87,9 @@ class PlacesViewModel: ViewModel() {
 
     fun addReTime(time: String){
         place.value?.reminderTime = time
+    }
+
+    fun addPhotoLink(link: String){
+        place.value?.photoLink = link
     }
 }

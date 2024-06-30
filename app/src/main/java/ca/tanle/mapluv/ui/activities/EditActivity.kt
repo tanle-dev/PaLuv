@@ -1,21 +1,15 @@
 package ca.tanle.mapluv.ui.activities
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.View.OnClickListener
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.ActivityEditBinding
-import ca.tanle.mapluv.databinding.ActivityMainBinding
-import ca.tanle.mapluv.ui.fragments.AddressFragment
-import ca.tanle.mapluv.ui.fragments.CoordinatesFragment
+import ca.tanle.mapluv.ui.activities.viewmodels.CoordinatesViewModel
+import ca.tanle.mapluv.ui.fragments.addPlace.AddressFragment
+import ca.tanle.mapluv.ui.fragments.addPlace.CoordinatesFragment
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 

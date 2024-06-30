@@ -13,7 +13,8 @@ data class Response(
 data class Address(
     val formatted_address: String,
     val geometry: Geometry,
-    val name: String
+    val name: String,
+    val place_id: String
 ): Parcelable
 
 @Parcelize

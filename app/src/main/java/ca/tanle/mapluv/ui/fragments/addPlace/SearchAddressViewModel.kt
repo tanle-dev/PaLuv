@@ -1,4 +1,4 @@
-package ca.tanle.mapluv.ui.fragments
+package ca.tanle.mapluv.ui.fragments.addPlace
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

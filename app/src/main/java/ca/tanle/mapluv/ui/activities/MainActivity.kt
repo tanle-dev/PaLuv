@@ -31,7 +31,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onNavItemClicked(){
-        changeScreen(MapFragment())
+        val bundle = intent.extras?.getBoolean("addOrEdit") ?: false
+        if(bundle){
+            changeScreen(PlacesFragment())
+        }else{
+            changeScreen(MapFragment())
+        }
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.map -> {

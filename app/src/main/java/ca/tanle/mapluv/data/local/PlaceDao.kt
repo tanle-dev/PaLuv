@@ -1,6 +1,5 @@
 package ca.tanle.mapluv.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -8,11 +7,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import ca.tanle.mapluv.data.models.Place
-import ca.tanle.mapluv.data.models.Places
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PlaceDao {
+    @Query("Delete from place_table")
+    suspend fun deleteAll()
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addPlace(place: Place)
 

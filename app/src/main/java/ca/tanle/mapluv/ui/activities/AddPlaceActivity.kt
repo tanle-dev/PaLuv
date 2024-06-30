@@ -6,26 +6,26 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.ColumnInfo
 import ca.tanle.mapluv.R
-import ca.tanle.mapluv.data.models.Place
 import ca.tanle.mapluv.databinding.ActivityAddPlaceBinding
-import ca.tanle.mapluv.databinding.ActivityEditBinding
 import ca.tanle.mapluv.network.AddressRepository
+import ca.tanle.mapluv.network.IAddressRepository
 import ca.tanle.mapluv.network.RetrofitProvider
+import ca.tanle.mapluv.ui.activities.viewmodels.AddressViewModel
+import ca.tanle.mapluv.ui.activities.viewmodels.PlacesViewModel
 import ca.tanle.mapluv.utils.DatePickerFragment
 import ca.tanle.mapluv.utils.IDate
 import ca.tanle.mapluv.utils.ITime
 import ca.tanle.mapluv.utils.TimePickerFragment
+import java.util.Date
 
 class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
     lateinit var binding: ActivityAddPlaceBinding
     private lateinit var viewModel: AddressViewModel
     private lateinit var placeViewModel: PlacesViewModel
+    private lateinit var addressRepository: IAddressRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPlaceBinding.inflate(layoutInflater)
@@ -34,7 +34,7 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
         viewModel = ViewModelProvider(this)[AddressViewModel::class.java]
         placeViewModel = ViewModelProvider(this)[PlacesViewModel::class.java]
 
-        val addressRepository = AddressRepository()
+        addressRepository = AddressRepository()
 
         val bundle = intent.extras!!
         val mode = bundle.getString("mode")
@@ -48,27 +48,47 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
                 binding.addressTextView.text = it
                 placeViewModel.addPlaceAddress(it)
             }
+
+            viewModel.id.observe(this){
+                placeViewModel.addPlaceId(it)
+                getPhotoLink()
+            }
         }else if(mode == "add"){
             val name = bundle.getString("name")
             val address = bundle.getString("address")
+            val id = bundle.getString("id")
 
             binding.addressTextView.text = address
             binding.placeNameEditText.setText(name)
+            placeViewModel.addPlaceId(id!!)
+
+            getPhotoLink()
         }
 
 
         binding.saveBtn.setOnClickListener() {
-            Log.d("Place", placeViewModel.place.value.toString())
             placeViewModel.addNewPlace(placeViewModel.place.value!!)
+            val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra("addOrEdit", true)
+            }
+            startActivity(intent)
+            finish()
         }
 
         setUpLayout()
 
-//        placeViewModel.getAllPlaces()
-//
-//        placeViewModel.places.observe(this){
-//            Log.d("Place List", it.toString())
-//        }
+        placeViewModel.getAllPlaces()
+        placeViewModel.places.observe(this){
+            Log.d("Place List", it.toString())
+        }
+    }
+
+    private fun getPhotoLink(){
+        viewModel.getPhotoLink(RetrofitProvider.retrofit, addressRepository, placeViewModel.place.value!!.id)
+        viewModel.link.observe(this){
+            placeViewModel.addPhotoLink(it)
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setUpLayout() {
@@ -161,6 +181,8 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
             placeViewModel.addReTitle(it.toString())
         }
 
+        binding.datePickerBtn.text =
+            getString(R.string.date_text_btn, Date().date, Date().month + 1, Date().year + 1900)
         binding.datePickerBtn.setOnClickListener{
             val newFragment = DatePickerFragment()
             newFragment.show(supportFragmentManager, "datePicker")
