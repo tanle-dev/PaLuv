@@ -1,14 +1,18 @@
 package ca.tanle.mapluv.ui.activities
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
+import ca.tanle.mapluv.data.models.Place
+import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.databinding.ActivityAddPlaceBinding
 import ca.tanle.mapluv.network.AddressRepository
 import ca.tanle.mapluv.network.IAddressRepository
@@ -19,6 +23,7 @@ import ca.tanle.mapluv.utils.DatePickerFragment
 import ca.tanle.mapluv.utils.IDate
 import ca.tanle.mapluv.utils.ITime
 import ca.tanle.mapluv.utils.TimePickerFragment
+import java.io.Serializable
 import java.util.Date
 
 class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
@@ -26,6 +31,7 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
     private lateinit var viewModel: AddressViewModel
     private lateinit var placeViewModel: PlacesViewModel
     private lateinit var addressRepository: IAddressRepository
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPlaceBinding.inflate(layoutInflater)
@@ -39,35 +45,51 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
         val bundle = intent.extras!!
         val mode = bundle.getString("mode")
 
-        if(mode == "cdn"){
-            val latLng = bundle.getDouble("lat").toString()+","+bundle.getDouble("lng").toString()
-            placeViewModel.addLatLng(bundle.getDouble("lat"), bundle.getDouble("lng"))
-            viewModel.getAddress(RetrofitProvider.retrofit, addressRepository, latLng)
+        when (mode) {
 
-            viewModel.address.observe(this){
-                binding.addressTextView.text = it
-                placeViewModel.addPlaceAddress(it)
+            "cdn" -> {
+                val latLng = bundle.getDouble("lat").toString()+","+bundle.getDouble("lng").toString()
+                placeViewModel.addLatLng(bundle.getDouble("lat"), bundle.getDouble("lng"))
+                viewModel.getAddress(RetrofitProvider.retrofit, addressRepository, latLng)
+
+                viewModel.address.observe(this){
+                    binding.addressTextView.text = it
+                    placeViewModel.addPlaceAddress(it)
+                }
+
+                viewModel.id.observe(this){
+                    placeViewModel.addPlaceId(it)
+                    getPhotoLink()
+                }
             }
 
-            viewModel.id.observe(this){
-                placeViewModel.addPlaceId(it)
+            "add" -> {
+                val name = bundle.getString("name")
+                val address = bundle.getString("address")
+                val id = bundle.getString("id")
+
+                binding.addressTextView.text = address
+                binding.placeNameEditText.setText(name)
+                placeViewModel.addPlaceId(id!!)
+
                 getPhotoLink()
             }
-        }else if(mode == "add"){
-            val name = bundle.getString("name")
-            val address = bundle.getString("address")
-            val id = bundle.getString("id")
 
-            binding.addressTextView.text = address
-            binding.placeNameEditText.setText(name)
-            placeViewModel.addPlaceId(id!!)
-
-            getPhotoLink()
+            "edit" -> {
+                binding.saveBtn.text = getString(R.string.update)
+                val place = bundle.getSerializable("place")
+                if(place != null) setUpEditPlace(place as Place)
+                placeViewModel.setPlace(place as Place)
+                Log.d("Place-Item", place.toString())
+            }
         }
 
-
         binding.saveBtn.setOnClickListener() {
-            placeViewModel.addNewPlace(placeViewModel.place.value!!)
+            if(mode == "edit") {
+                placeViewModel.updatePlace(placeViewModel.place.value!!)
+                Log.d("place", placeViewModel.place.value.toString())
+            }
+            else placeViewModel.addNewPlace(placeViewModel.place.value!!)
             val intent = Intent(this, MainActivity::class.java).apply {
                 putExtra("addOrEdit", true)
             }
@@ -76,11 +98,6 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
         }
 
         setUpLayout()
-
-        placeViewModel.getAllPlaces()
-        placeViewModel.places.observe(this){
-            Log.d("Place List", it.toString())
-        }
     }
 
     private fun getPhotoLink(){
@@ -89,6 +106,48 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
             placeViewModel.addPhotoLink(it)
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setUpEditPlace(place: Place){
+        binding.addressTextView.text = place.address
+        binding.placeNameEditText.setText(place.title)
+        if (place.visited) binding.visitedCheckBox.isChecked = true
+        when(place.rate){
+            1 -> binding.star1.setImageResource(R.drawable.star_filled_icon)
+            2 -> {
+                binding.star1.setImageResource(R.drawable.star_filled_icon)
+                binding.star2.setImageResource(R.drawable.star_filled_icon)
+            }
+            3 -> {
+                binding.star1.setImageResource(R.drawable.star_filled_icon)
+                binding.star2.setImageResource(R.drawable.star_filled_icon)
+                binding.star3.setImageResource(R.drawable.star_filled_icon)
+            }
+            4 -> {
+                binding.star1.setImageResource(R.drawable.star_filled_icon)
+                binding.star2.setImageResource(R.drawable.star_filled_icon)
+                binding.star3.setImageResource(R.drawable.star_filled_icon)
+                binding.star4.setImageResource(R.drawable.star_filled_icon)
+            }
+            5 -> {
+                binding.star1.setImageResource(R.drawable.star_filled_icon)
+                binding.star2.setImageResource(R.drawable.star_filled_icon)
+                binding.star3.setImageResource(R.drawable.star_filled_icon)
+                binding.star4.setImageResource(R.drawable.star_filled_icon)
+                binding.star5.setImageResource(R.drawable.star_filled_icon)
+            }
+        }
+
+        binding.commentEditText.setText(place.comment)
+        binding.phoneEditText.setText(place.phoneNumber)
+        binding.linkEditText.setText(place.webLink)
+        if(place.reminderTitle.isNotEmpty()) {
+            binding.reminderSwitch.isChecked = true
+            binding.reminderLayout.visibility = View.VISIBLE
+        }
+        binding.reminderTitleEditText.setText(place.reminderTitle)
+        binding.datePickerBtn.setText(place.reminderDate)
+        binding.timePickerBtn.setText(place.reminderTime)
     }
 
     private fun setUpLayout() {

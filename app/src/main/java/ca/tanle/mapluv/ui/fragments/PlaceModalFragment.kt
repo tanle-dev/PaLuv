@@ -1,6 +1,8 @@
 package ca.tanle.mapluv.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.databinding.FragmentPlaceModalBinding
+import ca.tanle.mapluv.ui.activities.AddPlaceActivity
 import ca.tanle.mapluv.ui.activities.viewmodels.PlacesViewModel
 import ca.tanle.mapluv.utils.OnRemoveItemUpdateListener
+import java.io.Serializable
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,12 +53,12 @@ class PlaceModalFragment(val placeItem: PlaceItem) : DialogFragment() {
         return binding.root
     }
 
-     private fun setUpLayout() {
+    private fun setUpLayout() {
          binding.placeTitle.text = placeItem.place.title
-        binding.placeAdd.text = placeItem.place.address
-        binding.placePhone.text = placeItem.place.phoneNumber
-        binding.placeWeb.text = placeItem.place.webLink
-        binding.placeComment.text = placeItem.place.comment
+         binding.placeAdd.text = placeItem.place.address
+         binding.placePhone.text = placeItem.place.phoneNumber
+         binding.placeWeb.text = placeItem.place.webLink
+         binding.placeComment.text = placeItem.place.comment
          binding.cancelBtnDetail.setOnClickListener {
              this.dismiss()
          }
@@ -64,10 +68,17 @@ class PlaceModalFragment(val placeItem: PlaceItem) : DialogFragment() {
 
          binding.removePlaceBtn.setOnClickListener {
              placeViewModel.deletePlace(placeItem.place)
-//             onRemovePlaceListener.onPlaceItemRemove()
-//             placeViewModel.getAllPlaces()
              this.dismiss()
          }
+
+        binding.editBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), AddPlaceActivity::class.java)
+            val bundle = Bundle()
+            bundle.putSerializable("place", placeItem.place)
+            bundle.putString("mode", "edit")
+            intent.putExtras(bundle)
+            startActivity(intent)
+        }
 
          if(placeItem.photo != null){
              binding.placeImage.setImageBitmap(placeItem.photo)

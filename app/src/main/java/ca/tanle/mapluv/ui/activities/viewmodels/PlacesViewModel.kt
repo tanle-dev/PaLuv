@@ -40,6 +40,18 @@ class PlacesViewModel: ViewModel() {
             getAllPlaces()
         }
     }
+
+    fun updatePlace(place: Place, placeRepository: PlaceRepository = Graph.placeRepository){
+        viewModelScope.launch(Dispatchers.IO){
+            placeRepository.updateAPlace(place)
+            getAllPlaces()
+        }
+    }
+
+    fun setPlace(place: Place){
+        _place.value = place
+    }
+
     fun addPlaceId(id: String){
         place.value?.id = id
     }
