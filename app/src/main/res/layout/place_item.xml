@@ -26,6 +26,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
+            android:singleLine="true"
             android:text="TextView"
             android:textColor="@color/primaryColor"
             android:textSize="18sp"

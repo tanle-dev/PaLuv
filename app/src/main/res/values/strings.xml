@@ -19,4 +19,8 @@
     <string name="date_text_btn">%1$s/%2$s/%3$s</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
+    <string name="dialog_message">Are you sure to save new changes?</string>
+    <string name="dialog_title">Save Confirm!</string>
+    <string name="name_is_needed">You should provide Place Name to save or update it!</string>
+    <string name="name_is_needed_title">Invalid Detail</string>
 </resources>

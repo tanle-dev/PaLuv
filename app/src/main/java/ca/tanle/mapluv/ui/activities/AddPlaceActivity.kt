@@ -1,5 +1,7 @@
 package ca.tanle.mapluv.ui.activities
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +14,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.data.models.Place
-import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.databinding.ActivityAddPlaceBinding
 import ca.tanle.mapluv.network.AddressRepository
 import ca.tanle.mapluv.network.IAddressRepository
@@ -23,7 +24,6 @@ import ca.tanle.mapluv.utils.DatePickerFragment
 import ca.tanle.mapluv.utils.IDate
 import ca.tanle.mapluv.utils.ITime
 import ca.tanle.mapluv.utils.TimePickerFragment
-import java.io.Serializable
 import java.util.Date
 
 class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
@@ -31,6 +31,7 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
     private lateinit var viewModel: AddressViewModel
     private lateinit var placeViewModel: PlacesViewModel
     private lateinit var addressRepository: IAddressRepository
+    private lateinit var mode: String
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +44,9 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
         addressRepository = AddressRepository()
 
         val bundle = intent.extras!!
-        val mode = bundle.getString("mode")
+        mode = bundle.getString("mode") ?: ""
 
         when (mode) {
-
             "cdn" -> {
                 val latLng = bundle.getDouble("lat").toString()+","+bundle.getDouble("lng").toString()
                 placeViewModel.addLatLng(bundle.getDouble("lat"), bundle.getDouble("lng"))
@@ -68,9 +68,16 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
                 val address = bundle.getString("address")
                 val id = bundle.getString("id")
 
-                binding.addressTextView.text = address
-                binding.placeNameEditText.setText(name)
-                placeViewModel.addPlaceId(id!!)
+                if (!address.isNullOrEmpty()){
+                    placeViewModel.addPlaceAddress(address)
+                    binding.addressTextView.text = address
+                }
+                if (id?.isNotEmpty() == true){
+                    placeViewModel.addPlaceId(id)
+                }
+                if (!name.isNullOrEmpty()){
+                    binding.placeNameEditText.setText(name)
+                }
 
                 getPhotoLink()
             }
@@ -84,20 +91,27 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
             }
         }
 
-        binding.saveBtn.setOnClickListener() {
-            if(mode == "edit") {
-                placeViewModel.updatePlace(placeViewModel.place.value!!)
-                Log.d("place", placeViewModel.place.value.toString())
-            }
-            else placeViewModel.addNewPlace(placeViewModel.place.value!!)
-            val intent = Intent(this, MainActivity::class.java).apply {
-                putExtra("addOrEdit", true)
-            }
-            startActivity(intent)
-            finish()
+        setUpLayout()
+    }
+
+    private fun handleSaveBtnClicked(){
+        if (binding.placeNameEditText.text.toString() == "") {
+
         }
 
-        setUpLayout()
+        if(placeViewModel.place.value?.title == ""){
+            placeViewModel.addPlaceName(binding.placeNameEditText.text.toString())
+        }
+        if(mode == "edit") {
+            placeViewModel.updatePlace(placeViewModel.place.value!!)
+            Log.d("place", placeViewModel.place.value.toString())
+        }
+        else placeViewModel.addNewPlace(placeViewModel.place.value!!)
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("addOrEdit", true)
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun getPhotoLink(){
@@ -151,6 +165,29 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
     }
 
     private fun setUpLayout() {
+        val alertConfirm = AlertDialog.Builder(this)
+        alertConfirm.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
+        alertConfirm.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
+            handleSaveBtnClicked()
+        })
+        alertConfirm.setNegativeButton("No", DialogInterface.OnClickListener() { dialog, which ->
+            dialog.cancel()
+        });
+
+        val alertValidate = AlertDialog.Builder(this)
+        alertValidate.setMessage(R.string.name_is_needed).setTitle(R.string.name_is_needed_title)
+        alertValidate.setPositiveButton( "OK", DialogInterface.OnClickListener() { dialog, which ->
+            dialog.cancel()
+        })
+
+        binding.saveBtn.setOnClickListener() {
+            if(binding.placeNameEditText.text.toString() == ""){
+                alertValidate.create().show()
+            }else{
+                alertConfirm.create().show()
+            }
+        }
+
         binding.placeNameEditText.addTextChangedListener(){
             placeViewModel.addPlaceName(it.toString())
         }
