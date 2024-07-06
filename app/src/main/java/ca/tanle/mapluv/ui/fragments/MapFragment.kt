@@ -31,8 +31,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarkerClickListener, OnMyLocationButtonClickListener{
-
-
     private lateinit var googleMap: GoogleMap
     private lateinit var binding: FragmentMapBinding
     private lateinit var locationUtils: LocationUtils
@@ -51,10 +49,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarker
         binding = FragmentMapBinding.inflate(layoutInflater)
         locationUtils = LocationUtils(requireActivity())
 
-
         val fragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         fragment.getMapAsync(this)
-
 
         return binding.root
     }

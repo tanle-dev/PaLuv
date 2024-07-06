@@ -71,6 +71,11 @@ class PlaceModalFragment(val placeItem: PlaceItem) : DialogFragment() {
              this.dismiss()
          }
 
+        if(placeItem.place.visited){
+            binding.checkIcon.visibility = View.VISIBLE
+            binding.visitedTV.visibility = View.VISIBLE
+        }
+
         binding.editBtn.setOnClickListener {
             val intent = Intent(requireActivity(), AddPlaceActivity::class.java)
             val bundle = Bundle()

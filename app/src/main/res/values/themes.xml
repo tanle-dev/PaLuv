@@ -2,7 +2,9 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MapLuv" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">#003459</item>
+        <item name="colorPrimary">#003459</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="android:windowBackground">@color/secondaryColor</item>
     </style>
 
     <style name="Theme.MapLuv" parent="Base.Theme.MapLuv" />
