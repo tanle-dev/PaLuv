@@ -45,6 +45,9 @@ android {
 
 dependencies {
     implementation("com.google.firebase:firebase-firestore:25.0.0")
+    implementation("com.google.firebase:firebase-auth:23.0.0")
+    implementation("androidx.annotation:annotation:1.7.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.3")
     val room = "2.6.0"
 
     implementation("androidx.room:room-runtime:$room")

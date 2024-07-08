@@ -1,9 +1,7 @@
 package ca.tanle.mapluv.network
 
-import android.graphics.Bitmap
-import ca.tanle.mapluv.data.remote.DResponse
-import ca.tanle.mapluv.data.remote.Response
-import com.google.android.gms.maps.model.LatLng
+import ca.tanle.mapluv.data.models.DResponse
+import ca.tanle.mapluv.data.models.Response
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
 

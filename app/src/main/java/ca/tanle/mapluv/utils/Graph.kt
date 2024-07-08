@@ -9,6 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import ca.tanle.mapluv.data.local.PlaceDatabase
 import ca.tanle.mapluv.data.remote.PlaceFirebase
 import ca.tanle.mapluv.data.repositories.PlaceRepository
+import ca.tanle.mapluv.data.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -19,6 +20,10 @@ object Graph{
 
     val placeRepository by lazy {
         PlaceRepository(roomDatabase.placeDao(), firebaseFirestore)
+    }
+
+    val userRepository by lazy {
+        UserRepository(firebaseFirestore)
     }
 
     val MIGRATION_1_2 = object : Migration(1, 2) {
