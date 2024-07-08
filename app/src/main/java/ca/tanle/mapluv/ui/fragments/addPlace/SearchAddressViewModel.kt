@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ca.tanle.mapluv.data.remote.Response
+import ca.tanle.mapluv.data.models.Response
 import ca.tanle.mapluv.network.IAddressRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

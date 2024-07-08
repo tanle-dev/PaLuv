@@ -8,8 +8,7 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class PaLuvApp: Application() {
     override fun onCreate() {
-
-        Log.d("AAA", "Hi Tan")
+        Graph.provide(this)
         super.onCreate()
     }
 }

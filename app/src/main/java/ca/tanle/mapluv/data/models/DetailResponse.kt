@@ -1,4 +1,4 @@
-package ca.tanle.mapluv.data.remote
+package ca.tanle.mapluv.data.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

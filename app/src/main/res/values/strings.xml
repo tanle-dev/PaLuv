@@ -23,4 +23,30 @@
     <string name="dialog_title">Save Confirm!</string>
     <string name="name_is_needed">You should provide Place Name to save or update it!</string>
     <string name="name_is_needed_title">Invalid Detail</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="welcome_back">WELCOME BACK</string>
+    <string name="to">to</string>
+    <string name="app_icon">app_icon</string>
+    <string name="re_enter_password">Re-enter Password...</string>
+    <string name="enter_password">Enter Password...</string>
+    <string name="enter_email">Enter Email...</string>
+    <string name="enter_username">Enter Username...</string>
+    <string name="placelover">PlaceLover</string>
+    <string name="forget_password">Forget password ?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="or">OR</string>
+    <string name="sign_up_with_google">Sign Up with Google</string>
+    <string name="sign_up_btn">Sign Up</string>
+    <string name="google_icon">google_icon</string>
+    <string name="sign_in">Log In</string>
+    <string name="sign_in_btn">Log In</string>
+    <string name="log_in_with_google">Log In with Google</string>
 </resources>

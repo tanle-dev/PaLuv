@@ -9,7 +9,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.tanle.mapluv.R
-import ca.tanle.mapluv.data.remote.Address
+import ca.tanle.mapluv.data.models.Address
 import ca.tanle.mapluv.ui.activities.AddPlaceActivity
 
 class SearchAddressAdapter(var data: ArrayList<Address>): RecyclerView.Adapter<SearchAddVH>() {
