@@ -67,6 +67,8 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
                 val name = bundle.getString("name")
                 val address = bundle.getString("address")
                 val id = bundle.getString("id")
+                val lat = bundle.getDouble("lat")
+                val lng = bundle.getDouble("lng")
 
                 if (!address.isNullOrEmpty()){
                     placeViewModel.addPlaceAddress(address)
@@ -77,6 +79,10 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
                 }
                 if (!name.isNullOrEmpty()){
                     binding.placeNameEditText.setText(name)
+                }
+
+                if (!lat.isNaN() && !lng.isNaN()){
+                    placeViewModel.addLatLng(lat, lng)
                 }
 
                 getPhotoLink()
@@ -95,10 +101,6 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
     }
 
     private fun handleSaveBtnClicked(){
-        if (binding.placeNameEditText.text.toString() == "") {
-
-        }
-
         if(placeViewModel.place.value?.title == ""){
             placeViewModel.addPlaceName(binding.placeNameEditText.text.toString())
         }
