@@ -15,4 +15,8 @@ class UserRepository(private val remote: PlaceFirebase) {
     suspend fun logOut(): Boolean{
         return remote.logOut()
     }
+
+    suspend fun getUserName(): Any?{
+        return remote.getUserName()
+    }
 }

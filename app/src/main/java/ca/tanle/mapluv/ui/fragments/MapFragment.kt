@@ -11,10 +11,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.databinding.FragmentMapBinding
 import ca.tanle.mapluv.ui.activities.viewmodels.CoordinatesViewModel
 import ca.tanle.mapluv.ui.activities.EditActivity
+import ca.tanle.mapluv.ui.activities.viewmodels.UserViewModel
 import ca.tanle.mapluv.utils.LocationUtils
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -51,6 +53,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarker
 
         val fragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         fragment.getMapAsync(this)
+
+        val viewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        viewModel.userName.observe(requireActivity()){
+            binding.userNameTV.text = getString(R.string.username, it)
+        }
 
         return binding.root
     }

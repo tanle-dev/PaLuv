@@ -49,4 +49,5 @@
     <string name="sign_in">Log In</string>
     <string name="sign_in_btn">Log In</string>
     <string name="log_in_with_google">Log In with Google</string>
+    <string name="username">\@%1$s</string>
 </resources>
