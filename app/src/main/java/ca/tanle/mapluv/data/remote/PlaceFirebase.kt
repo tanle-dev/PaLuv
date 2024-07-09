@@ -73,6 +73,19 @@ class PlaceFirebase {
         }
     }
 
+    suspend fun getUserName(): Any?{
+        return try {
+            val uid = auth.currentUser?.uid
+            if (uid.isNullOrEmpty()) return null
+            val result= usersCollection.document(uid)
+                .get().await()
+
+            result?.data?.get("userName")
+        }catch (e: Exception){
+            null
+        }
+    }
+
     suspend fun getAllPlaces(): List<Place> {
         return listOf();
     }

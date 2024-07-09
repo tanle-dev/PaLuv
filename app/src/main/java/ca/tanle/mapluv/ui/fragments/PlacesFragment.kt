@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ca.tanle.mapluv.R
 import ca.tanle.mapluv.data.models.PlaceItem
 import ca.tanle.mapluv.databinding.FragmentPlacesBinding
 import ca.tanle.mapluv.network.AddressRepository
 import ca.tanle.mapluv.network.RetrofitProvider
 import ca.tanle.mapluv.ui.activities.viewmodels.AddressViewModel
 import ca.tanle.mapluv.ui.activities.viewmodels.PlacesViewModel
+import ca.tanle.mapluv.ui.activities.viewmodels.UserViewModel
 import ca.tanle.mapluv.ui.fragments.adapters.PlaceListAdapter
 import ca.tanle.mapluv.utils.OnPlaceItemClickListener
 import ca.tanle.mapluv.utils.OnRemoveItemUpdateListener
@@ -65,6 +67,11 @@ class PlacesFragment : Fragment(), OnPlaceItemClickListener, OnRemoveItemUpdateL
 
         addressViewModel.placeList.observe(requireActivity()){
             placeListAdapter.updateDataChanged(it)
+        }
+
+        val viewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        viewModel.userName.observe(requireActivity()){
+            binding.userNameTV.text = getString(R.string.username, it)
         }
 
         return binding.root

@@ -31,13 +31,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        onNavItemClicked()
+        val viewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        viewModel.getUserName()
+
+        viewModel.userName.observe(this){
+            onNavItemClicked()
+        }
     }
 
     private fun onNavItemClicked(){
         val bundle = intent.extras?.getBoolean("addOrEdit") ?: false
         if(bundle){
             changeScreen(PlacesFragment())
+            binding.bottomNavigationView.selectedItemId = R.id.places
         }else{
             changeScreen(MapFragment())
         }

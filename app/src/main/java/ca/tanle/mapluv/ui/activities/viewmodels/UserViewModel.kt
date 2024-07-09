@@ -11,11 +11,20 @@ import ca.tanle.mapluv.utils.Graph
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val authRepository: UserRepository = Graph.userRepository): ViewModel() {
-    val _authen = MutableLiveData("login")
+    private val _authen = MutableLiveData("login")
     val authen: LiveData<String> = _authen
+
+    private val _userName = MutableLiveData("")
+    val userName: LiveData<String> = _userName
 
     fun setAuthen(s: String){
         _authen.value = s
+    }
+
+    fun getUserName(){
+        viewModelScope.launch{
+            _userName.value = authRepository.getUserName() as String
+        }
     }
 
     fun signIn(user: User, onResult: (Boolean) -> Unit) {
