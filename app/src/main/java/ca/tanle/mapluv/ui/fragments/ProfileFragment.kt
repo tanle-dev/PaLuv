@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.data.models.User
 import ca.tanle.mapluv.databinding.FragmentProfileBinding
+import ca.tanle.mapluv.ui.activities.viewmodels.PlacesViewModel
 import ca.tanle.mapluv.ui.activities.viewmodels.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,6 +44,7 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater)
         val viewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        val placeViewModel = ViewModelProvider(requireActivity())[PlacesViewModel::class.java]
 
 
 
@@ -78,19 +80,14 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        binding.syncBtn.setOnClickListener {
+            placeViewModel.syncData()
+        }
+
         return binding.root
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ProfileFragment().apply {

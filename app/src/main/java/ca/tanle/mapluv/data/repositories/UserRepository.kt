@@ -19,4 +19,8 @@ class UserRepository(private val remote: PlaceFirebase) {
     suspend fun getUserName(): Any?{
         return remote.getUserName()
     }
+
+    fun getUserId(): String?{
+        return remote.getUserId()
+    }
 }

@@ -40,7 +40,6 @@ class AddressViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val fetchDetail = repository.getDetailPlace(retrofit, id)
             val fetchLink = fetchDetail.result
-            Log.d("Place", fetchDetail.toString())
             if (fetchLink != null && fetchLink.photos != null && fetchLink.photos.isNotEmpty()) {
                 _link.postValue(fetchLink.photos[0].photo_reference)
             } else {
@@ -55,7 +54,6 @@ class AddressViewModel: ViewModel() {
             try {
                 val def = viewModelScope.async(Dispatchers.IO){
                     val responseBody = repository.getPhotoPlace(retrofit, photoRef)
-                    Log.d("Error here", photoRef)
                     responseBody.byteStream().use {
                         BitmapFactory.decodeStream(it)
                     }
@@ -68,17 +66,14 @@ class AddressViewModel: ViewModel() {
     }
 
     fun getPlaceList(retrofit: Retrofit, repository: IAddressRepository, places: List<Place>){
-        _placeList.value = arrayListOf()
         viewModelScope.launch {
-            for (place in places){
+            val list = arrayListOf<PlaceItem>()
+            for (place in places) {
                 val photo = getPlacePhoto(retrofit, repository, place.photoLink)
                 val placeItem = PlaceItem(place, photo)
-
-                _placeList.value.let {
-                    it?.add(placeItem)
-                    _placeList.value = it
-                }
+                list.add(placeItem)
             }
+            _placeList.postValue(list)
         }
     }
 }

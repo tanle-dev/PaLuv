@@ -20,6 +20,7 @@ import ca.tanle.mapluv.network.IAddressRepository
 import ca.tanle.mapluv.network.RetrofitProvider
 import ca.tanle.mapluv.ui.activities.viewmodels.AddressViewModel
 import ca.tanle.mapluv.ui.activities.viewmodels.PlacesViewModel
+import ca.tanle.mapluv.ui.activities.viewmodels.UserViewModel
 import ca.tanle.mapluv.utils.DatePickerFragment
 import ca.tanle.mapluv.utils.IDate
 import ca.tanle.mapluv.utils.ITime
@@ -31,6 +32,7 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
     private lateinit var viewModel: AddressViewModel
     private lateinit var placeViewModel: PlacesViewModel
     private lateinit var addressRepository: IAddressRepository
+    private lateinit var userViewModel: UserViewModel
     private lateinit var mode: String
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,7 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
 
         viewModel = ViewModelProvider(this)[AddressViewModel::class.java]
         placeViewModel = ViewModelProvider(this)[PlacesViewModel::class.java]
+        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
         addressRepository = AddressRepository()
 
@@ -101,12 +104,13 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
     }
 
     private fun handleSaveBtnClicked(){
+        placeViewModel.setUserId(userViewModel.getUserId()!!)
+        placeViewModel.setLastUpdated()
         if(placeViewModel.place.value?.title == ""){
             placeViewModel.addPlaceName(binding.placeNameEditText.text.toString())
         }
         if(mode == "edit") {
             placeViewModel.updatePlace(placeViewModel.place.value!!)
-            Log.d("place", placeViewModel.place.value.toString())
         }
         else placeViewModel.addNewPlace(placeViewModel.place.value!!)
         val intent = Intent(this, MainActivity::class.java).apply {
@@ -120,7 +124,6 @@ class AddPlaceActivity : AppCompatActivity(), IDate, ITime {
         viewModel.getPhotoLink(RetrofitProvider.retrofit, addressRepository, placeViewModel.place.value!!.id)
         viewModel.link.observe(this){
             placeViewModel.addPhotoLink(it)
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 

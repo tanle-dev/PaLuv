@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import ca.tanle.mapluv.R
 import ca.tanle.mapluv.data.models.User
 import ca.tanle.mapluv.databinding.ActivityMainBinding
+import ca.tanle.mapluv.ui.activities.viewmodels.PlacesViewModel
 import ca.tanle.mapluv.ui.activities.viewmodels.UserViewModel
 import ca.tanle.mapluv.ui.fragments.MapFragment
 import ca.tanle.mapluv.ui.fragments.PlacesFragment
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProvider(this)[UserViewModel::class.java]
         viewModel.getUserName()
+
+        ViewModelProvider(this)[PlacesViewModel::class.java]
 
         viewModel.userName.observe(this){
             onNavItemClicked()

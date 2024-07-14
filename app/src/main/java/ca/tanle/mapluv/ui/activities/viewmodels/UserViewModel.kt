@@ -17,8 +17,15 @@ class UserViewModel(private val authRepository: UserRepository = Graph.userRepos
     private val _userName = MutableLiveData("")
     val userName: LiveData<String> = _userName
 
+    private val _userId = MutableLiveData("")
+    val userId: LiveData<String> = _userId
+
     fun setAuthen(s: String){
         _authen.value = s
+    }
+
+    fun getUserId(): String?{
+        return authRepository.getUserId()
     }
 
     fun getUserName(){

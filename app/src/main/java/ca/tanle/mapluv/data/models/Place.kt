@@ -9,9 +9,9 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.util.UUID
 
-@Entity("place_table")
+@Entity("place_table", primaryKeys = ["id", "user_id"])
 data class Place(
-    @PrimaryKey() var id: String = UUID.randomUUID().toString(),
+    @ColumnInfo() var id: String = UUID.randomUUID().toString(),
     @ColumnInfo("title") var title: String = "",
     @ColumnInfo("visited") var visited: Boolean = false,
     @ColumnInfo("lat") var lat: Double = 0.0,
@@ -24,7 +24,9 @@ data class Place(
     @ColumnInfo("reminder_title") var reminderTitle: String = "",
     @ColumnInfo("reminder_date") var reminderDate: String = "",
     @ColumnInfo("reminder_time") var reminderTime: String = "",
-    @ColumnInfo("photo_link") var photoLink: String = ""
+    @ColumnInfo("photo_link") var photoLink: String = "",
+    @ColumnInfo("user_id") var userId: String = "",
+    @ColumnInfo("last_updated") var lastUpdated: Long = 0L
 ): Serializable
 
 data class PlaceItem(var place: Place, var photo: Bitmap?): Serializable

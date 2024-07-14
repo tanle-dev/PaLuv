@@ -21,8 +21,9 @@ class PlacesViewModel: ViewModel() {
 
     fun getAllPlaces(placeRepository: PlaceRepository = Graph.placeRepository){
         _places.postValue(emptyList())
+        val userViewModel = UserViewModel()
         viewModelScope.launch(Dispatchers.IO) {
-            val fetchData = placeRepository.getAllPlaces()
+            val fetchData = placeRepository.getAllPlaces(userViewModel.getUserId()!!)
             _places.postValue(fetchData)
         }
     }
@@ -44,6 +45,13 @@ class PlacesViewModel: ViewModel() {
     fun updatePlace(place: Place, placeRepository: PlaceRepository = Graph.placeRepository){
         viewModelScope.launch(Dispatchers.IO){
             placeRepository.updateAPlace(place)
+            getAllPlaces()
+        }
+    }
+
+    fun syncData(placeRepository: PlaceRepository = Graph.placeRepository){
+        viewModelScope.launch(Dispatchers.IO) {
+            placeRepository.syncData()
             getAllPlaces()
         }
     }
@@ -103,5 +111,13 @@ class PlacesViewModel: ViewModel() {
 
     fun addPhotoLink(link: String){
         place.value?.photoLink = link
+    }
+
+    fun setUserId(id: String){
+        place.value?.userId = id
+    }
+
+    fun setLastUpdated(){
+        place.value?.lastUpdated = System.currentTimeMillis()
     }
 }

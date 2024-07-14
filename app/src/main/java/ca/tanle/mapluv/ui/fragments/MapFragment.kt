@@ -39,7 +39,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMapClickListener, OnMarker
     private lateinit var coordinatesViewModel: CoordinatesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        coordinatesViewModel = ViewModelProvider(requireActivity()).get(CoordinatesViewModel::class.java)
+        coordinatesViewModel = ViewModelProvider(requireActivity())[CoordinatesViewModel::class.java]
         super.onCreate(savedInstanceState)
     }
 

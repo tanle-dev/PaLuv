@@ -41,6 +41,9 @@ class PlacesFragment : Fragment(), OnPlaceItemClickListener, OnRemoveItemUpdateL
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        placeViewModel = ViewModelProvider(requireActivity())[PlacesViewModel::class.java]
+        addressViewModel = ViewModelProvider(requireActivity())[AddressViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -48,10 +51,9 @@ class PlacesFragment : Fragment(), OnPlaceItemClickListener, OnRemoveItemUpdateL
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        placeViewModel = ViewModelProvider(this)[PlacesViewModel::class.java]
+
         binding = FragmentPlacesBinding.inflate(inflater)
 
-        addressViewModel = ViewModelProvider(this)[AddressViewModel::class.java]
         val repository = AddressRepository()
         placeViewModel.getAllPlaces()
 
@@ -60,12 +62,11 @@ class PlacesFragment : Fragment(), OnPlaceItemClickListener, OnRemoveItemUpdateL
         recyclerView.layoutManager = GridLayoutManager(activity, 2)
 
         recyclerView.adapter = placeListAdapter
-
-        placeViewModel.places.observe(requireActivity()){
+        placeViewModel.places.observe(viewLifecycleOwner){
             addressViewModel.getPlaceList(RetrofitProvider.retrofit, repository, it)
         }
 
-        addressViewModel.placeList.observe(requireActivity()){
+        addressViewModel.placeList.observe(viewLifecycleOwner){
             placeListAdapter.updateDataChanged(it)
         }
 
@@ -78,15 +79,6 @@ class PlacesFragment : Fragment(), OnPlaceItemClickListener, OnRemoveItemUpdateL
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PlacesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             PlacesFragment().apply {

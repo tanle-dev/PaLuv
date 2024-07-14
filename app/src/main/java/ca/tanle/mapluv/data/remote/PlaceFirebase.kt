@@ -1,20 +1,27 @@
 package ca.tanle.mapluv.data.remote
 
 import android.util.Log
+import ca.tanle.mapluv.data.local.PlaceDao
 import ca.tanle.mapluv.data.models.Place
 import ca.tanle.mapluv.data.models.User
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 class PlaceFirebase {
     private val usersCollection = Firebase.firestore.collection("users")
     private val auth = Firebase.auth
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     suspend fun signUp(user: User): Boolean{
         return try {
@@ -86,19 +93,85 @@ class PlaceFirebase {
         }
     }
 
+    fun getUserId():String?{
+        return auth.uid
+    }
+
     suspend fun getAllPlaces(): List<Place> {
-        return listOf();
+        return try {
+            usersCollection.document(auth.uid!!).collection("places").get().await().toObjects(Place::class.java)
+        }catch (e: Exception){
+            emptyList()
+        }
     }
 
-    suspend fun getAPlace(id: String): Place {
-        return Place("", "", false, 0.0, 0.0, "", "", 0, "", "", "", "", "");
+    suspend fun getAPlace(id: String): Place? {
+        return try {
+            usersCollection.document(auth.uid!!).collection("places").document(id).get().await().toObject(Place::class.java)
+        }catch (e: Exception){
+            null
+        }
     }
 
-    suspend fun updateAPlace(place: Place) {
-
+    suspend fun updateAPlace(place: Place): Boolean {
+        return try{
+            usersCollection.document(auth.uid!!).collection("places").document(place.id).set(place).await()
+            Log.d("Firestore update place", "Successfully!")
+            true
+        }catch (e: Exception){
+            Log.d("Firestore update place", "Can not update place to Firestore")
+            false
+        }
     }
 
-    suspend fun deleteAPlace(place: Place) {
+    suspend fun deleteAPlace(place: Place):  Boolean {
+        return try{
+            usersCollection.document(auth.uid!!).collection("places").document(place.id).delete().await()
+            Log.d("Firestore delete place", "Successfully!")
+            true
+        }catch (e: Exception){
+            Log.d("Firestore delete place", "Can not delete place from Firestore")
+            false
+        }
+    }
+
+    fun addOrUpdate(item: Place){
+        try {
+            usersCollection.document(auth.uid!!).collection("places").document(item.id).set(item)
+        }catch (e: Exception){
+            Log.d("Firestore Update", "Can not sync local data to firebase.")
+        }
+    }
+
+    fun listenForFirestoreUpdates(localDao: PlaceDao) {
+        try {
+            usersCollection.document(auth.uid!!).collection("places")
+                .addSnapshotListener { snapshots, e ->
+                    if (e != null) {
+                        return@addSnapshotListener
+                    }
+
+                    scope.launch {
+                        for (dc in snapshots!!.documentChanges) {
+                            val data = dc.document.toObject(Place::class.java)
+                            when (dc.type) {
+                                DocumentChange.Type.ADDED, DocumentChange.Type.MODIFIED -> {
+                                    // Check for lastUpdate conflict
+                                    val roomItem = localDao.getAPlace(data.id, auth.uid!!)
+                                    if (roomItem == null || data.lastUpdated > roomItem.lastUpdated) {
+                                        localDao.addPlace(data)
+                                    }
+                                }
+                                DocumentChange.Type.REMOVED -> {
+                                    localDao.deleteAPlace(data)
+                                }
+                            }
+                        }
+                    }
+                }
+        }catch (e: Exception){
+            Log.d("Local Database Update", "Can not sync remote data to local db.")
+        }
 
     }
 }
