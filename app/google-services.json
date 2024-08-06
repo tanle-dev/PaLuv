@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:628978872258:android:b111aeb271c7150271305b",
+        "mobilesdk_app_id": "1:628978872258:android:b799671e05ba33ea71305b",
         "android_client_info": {
-          "package_name": "ca.tanle.mapluv"
+          "package_name": "ca.tanle.paluv"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "628978872258-aa8oq5rrd3amf34c54e5m7a58jdpk6n7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBC4H6EEtrVaff-EqvlfwwVlFAnnjhSql4"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628978872258-aa8oq5rrd3amf34c54e5m7a58jdpk6n7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

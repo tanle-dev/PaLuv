@@ -9,7 +9,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView3"
-        android:name="ca.tanle.mapluv.ui.fragments.AuthenFragment"
+        android:name="ca.tanle.paluv.ui.fragments.AuthenFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
